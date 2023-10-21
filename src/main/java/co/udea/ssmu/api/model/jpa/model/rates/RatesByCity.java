@@ -15,8 +15,12 @@ public class RatesByCity  {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(mappedBy = "id", cascade = CascadeType.ALL)
+    @NotNull
+    @Column(name = "idciudad")
+    private Integer idciudad;
+    @OneToOne(mappedBy = "id")
     private City city;
+    
     @NotNull
     @Column(name = "percentage")
     private Integer percentage;
