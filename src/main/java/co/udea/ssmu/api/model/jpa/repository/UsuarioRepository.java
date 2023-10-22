@@ -14,4 +14,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     boolean existsByEmailOrNroDocumento(@Param("email") String email, @Param("nroDocumento") String nroDocumento);
 
     Usuario findByEmail(String email);
+    Usuario findByNroDocumento(String nroDocumento);
 }

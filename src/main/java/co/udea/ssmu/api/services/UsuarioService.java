@@ -22,6 +22,14 @@ public class UsuarioService {
         this.tipoUsuarioRepository = tipoUsuarioRepository;
     }
 
+    public Usuario obtenerInformacionUsuario(String nroDocumento) {
+        Usuario usuario = usuarioRepository.findByNroDocumento(nroDocumento);
+        if (usuario == null) {
+            throw new RuntimeException("El numero de usuario no existe.");
+        }
+        return usuario;
+    }
+
     public Usuario crearUsuario(UsuarioDTO usuarioDTO) {
         Usuario usuario = UsuarioMapper.convertirEntidad(usuarioDTO);
         if (this.existeUsuario(usuario)) {
