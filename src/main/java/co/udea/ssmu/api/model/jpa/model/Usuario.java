@@ -44,8 +44,8 @@ public class Usuario {
     @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="cedula", nullable = false)
-    private String cedula;
+    @Column(name="nro_documento", nullable = false)
+    private String nroDocumento;
 
     @Column(name="rol", nullable = false)
     private String rol;
