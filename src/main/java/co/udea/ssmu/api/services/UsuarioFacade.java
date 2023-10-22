@@ -13,4 +13,8 @@ public class UsuarioFacade {
     public UsuarioDTO crearUsuario(UsuarioDTO usuarioDTO){
         return UsuarioMapper.convertirDTO(usuarioService.crearUsuario(usuarioDTO));
     }
+
+    public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO){
+        return UsuarioMapper.convertirDTO(usuarioService.actualizarUsuario(usuarioDTO));
+    }
 }

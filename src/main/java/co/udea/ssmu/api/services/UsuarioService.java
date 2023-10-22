@@ -28,7 +28,33 @@ public class UsuarioService {
             throw new RuntimeException("El email o el número de documento ya existen.");
         }
         this.asignarTipoUsuario(usuario, 1L);
-        return usuarioRepository.save(usuario);
+        return this.usuarioRepository.save(usuario);
+    }
+
+    public Usuario actualizarUsuario(UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioRepository.findByEmail(usuarioDTO.getEmail());
+        if (usuario == null) {
+            throw new RuntimeException("El usuario no existe.");
+        }
+        this.actualizarUsuario(usuario, usuarioDTO);
+        return this.usuarioRepository.save(usuario);
+    }
+
+
+    private void actualizarUsuario(Usuario usuario, UsuarioDTO usuarioDTO){
+        if (usuarioDTO.getNombre() != null) {
+            usuario.setNombre(usuarioDTO.getNombre());
+        }
+        if (usuarioDTO.getApellido() != null) {
+            usuario.setApellido(usuarioDTO.getApellido());
+        }
+        if (usuarioDTO.getCelular() != null) {
+            usuario.setCelular(usuarioDTO.getCelular());
+        }
+        if (usuarioDTO.getPassword() != null) {
+            String password = UsuarioMapper.encodePassword(usuarioDTO.getPassword());
+            usuario.setPassword(password);
+        }
     }
 
     private void asignarTipoUsuario(Usuario usuario, long idTipoUsuario) {
@@ -37,6 +63,6 @@ public class UsuarioService {
     }
 
     private boolean existeUsuario(Usuario usuario) {
-        return usuarioRepository.existsByEmailOrNroDocumento(usuario.getEmail(), usuario.getNroDocumento());
+        return this.usuarioRepository.existsByEmailOrNroDocumento(usuario.getEmail(), usuario.getNroDocumento());
     }
 }
