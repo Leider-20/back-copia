@@ -15,15 +15,35 @@ public class RatesByCity  {
     @Column(name = "id")
     private Integer id;
 
-    @NotNull
-    @Column(name = "idciudad")
-    private Integer idciudad;
-    @OneToOne(mappedBy = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id", insertable = true, updatable = true)
     private City city;
-    
+
     @NotNull
     @Column(name = "percentage")
     private Integer percentage;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Integer getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
+    }
 }

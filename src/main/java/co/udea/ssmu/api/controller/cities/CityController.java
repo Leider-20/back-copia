@@ -32,7 +32,7 @@ public class CityController {
         this.messages = messages;
     }
 
-    @GetMapping("/get")
+    @GetMapping("")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)

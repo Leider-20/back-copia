@@ -5,7 +5,7 @@ import co.udea.ssmu.api.model.jpa.dto.cities.CityDTO;
 public class RatesByCityDTO {
 
     private Integer id;
-    private CityDTO ciudad;
+    private CityDTO city;
     private Integer percentage;
 
     public Integer getId() {
@@ -16,8 +16,12 @@ public class RatesByCityDTO {
         this.id = id;
     }
 
-    public CityDTO getCiudad() {
-        return ciudad;
+    public CityDTO getCity() {
+        return city;
+    }
+
+    public void setCity(CityDTO city) {
+        this.city = city;
     }
 
     public Integer getPercentage() {
@@ -28,9 +32,6 @@ public class RatesByCityDTO {
         this.percentage = percentage;
     }
 
-    public void setCiudad(CityDTO ciudad) {
-        this.ciudad = ciudad;
-    }
 
 
 }

@@ -2,9 +2,7 @@ package co.udea.ssmu.api.services.cities.service;
 
 
 import co.udea.ssmu.api.model.jpa.model.cities.City;
-import co.udea.ssmu.api.model.jpa.model.drivers.Driver;
 import co.udea.ssmu.api.model.jpa.repository.cities.ICityRepository;
-import co.udea.ssmu.api.model.jpa.repository.drivers.DriverRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
