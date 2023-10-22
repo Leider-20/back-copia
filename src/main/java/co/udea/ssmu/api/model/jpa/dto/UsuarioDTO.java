@@ -2,12 +2,14 @@ package co.udea.ssmu.api.model.jpa.dto;
 
 import co.udea.ssmu.api.model.jpa.model.Grupo;
 import co.udea.ssmu.api.model.jpa.model.TipoUsuario;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@Builder
 public class UsuarioDTO {
     private long id;
     private String nombre;
