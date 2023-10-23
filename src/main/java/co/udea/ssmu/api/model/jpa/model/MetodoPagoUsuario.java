@@ -4,6 +4,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import java.sql.Date;
@@ -17,6 +18,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "metodo_pago_usuario")
 public class MetodoPagoUsuario {
+
+    @Id
+    @Column(name="id_metodo_pago_usuario")
+    private long idMetodoPagoUsuario;
+
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;

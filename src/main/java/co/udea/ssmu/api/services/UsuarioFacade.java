@@ -1,8 +1,13 @@
 package co.udea.ssmu.api.services;
 
+import org.springframework.stereotype.Service;
+
 import co.udea.ssmu.api.model.jpa.dto.UsuarioDTO;
 import co.udea.ssmu.api.model.jpa.mapper.UsuarioMapper;
+import jakarta.transaction.Transactional;
 
+@Service
+@Transactional
 public class UsuarioFacade {
     private UsuarioService usuarioService;
 

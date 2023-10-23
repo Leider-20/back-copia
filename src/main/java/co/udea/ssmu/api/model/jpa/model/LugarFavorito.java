@@ -22,7 +22,6 @@ public class LugarFavorito {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    @Column(name = "id_usuario")
     private Usuario usuario;
 
     @Column(name = "id_ubicacion")
