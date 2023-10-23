@@ -28,7 +28,7 @@ public class Vehicle {
 
     @NotNull
     @Column(name = "state")
-    private VehicleStatusEnum state = VehicleStatusEnum.active;
+    private VehicleStatusEnum state = VehicleStatusEnum.ACTIVE;
 
     @Column(name = "mechanic")
     private String mechanic;

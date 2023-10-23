@@ -45,7 +45,7 @@ public class Driver {
 
     @NotNull
     @Column(name = "state")
-    private StateDriverEnum state = StateDriverEnum.active;
+    private StateDriverEnum state = StateDriverEnum.ACTIVE;
 
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Vehicle vehicle;
