@@ -15,9 +15,9 @@ public class RatesByCity  {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id", insertable = true, updatable = true)
-    private City city;
+    @OneToOne
+    @JoinColumn(name = "idcity")
+    private City idcity;
 
     @NotNull
     @Column(name = "percentage")
@@ -31,12 +31,13 @@ public class RatesByCity  {
         this.id = id;
     }
 
+
     public City getCity() {
-        return city;
+        return idcity;
     }
 
     public void setCity(City city) {
-        this.city = city;
+        this.idcity = city;
     }
 
     public Integer getPercentage() {

@@ -25,7 +25,7 @@ public class RatesService {
         //Validar que por codigo que  la ciudad si exista.
         // Validar que se ingrese un porcentaje correcto
         //En caso no funcione saltar una excepcion
-        System.out.println("######id ciudad a guardar"+ratesByCity.getCity().getId());
+        System.out.println("###### id ciudad a guardar"+ratesByCity.getCity().getId());
         return iRatesByCityRepository.save(ratesByCity);
     }
 
