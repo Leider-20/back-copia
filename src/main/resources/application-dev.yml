@@ -17,9 +17,9 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/postgres?serverTimezone=America/Bogota
+    url: jdbc:postgresql://db.tpcophvaqbaottvwlxio.supabase.co:5432/postgres
     username: postgres
-    password: admin
+    password: jZ467iwRN33VNU6r
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
