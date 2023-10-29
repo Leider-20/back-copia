@@ -5,8 +5,6 @@ import co.udea.ssmu.api.model.jpa.model.rates.Rate;
 import co.udea.ssmu.api.model.jpa.repository.rates.IRateRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +29,8 @@ public class RateService {
     public Rate save(Rate rateToSave) {
         Date beginDate = rateToSave.getBegin_date();
         Date endDate = rateToSave.getEnd_date();
-        System.out.println("################" + rateToSave.getPrice());
-        System.out.println("Conversión de RateDTO a Rate: " + rateToSave.toString());
+        //System.out.println("################" + rateToSave.getPrice());
+        //System.out.println("Conversión de RateDTO a Rate: " + rateToSave.toString());
 
 
 
@@ -52,7 +50,7 @@ public class RateService {
             }
 
             // Devolver las políticas conflictivas en formato JSON
-            throw new IllegalArgumentException("Ya existe una política activa para las mismas fechas en esta ciudad: " + conflictingRatesJson);
+            throw new IllegalArgumentException("Hay solapamiento de políticas " + conflictingRatesJson);
         } else {
             // No hay solapamiento, guardar la nueva política
             return iRateRepository.save(rateToSave);

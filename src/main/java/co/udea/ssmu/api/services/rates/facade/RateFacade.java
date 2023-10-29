@@ -45,8 +45,7 @@ public class RateFacade {
             Rate rate = rateOptional.get();
             return iRateMapper.toDto(rate);
         } else {
-            // Puedes manejar la situación en la que no se encuentra el registro con el id especificado.
-            // En este ejemplo, simplemente retornamos null.
+            // Retorna null si no encuentra el id
             return null;
         }
     }

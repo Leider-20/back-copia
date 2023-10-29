@@ -42,8 +42,8 @@ public class RateController {
             @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")})
     public ResponseEntity<StandardResponse<RateDTO>> save(@Valid @RequestBody RateDTO rateDTO) {
         //System.out.println("########JSON deserializado: " + rateDTO.toString());
-        System.out.println("#####################DTO recibido: " + rateDTO.toString());
-        System.out.println();
+        //System.out.println("#####################DTO recibido: " + rateDTO.toString());
+        //System.out.println();
 
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("rates.save.successful"),
