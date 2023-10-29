@@ -1,7 +1,10 @@
 package co.udea.ssmu.api.model.jpa.model.rates;
+
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,17 +19,18 @@ public class Rate {
     @Column(name = "price")
     private Integer price;
 
-
     @Column(name = "surcharge")
     private Integer surcharge;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     @Column(name = "begin_date")
-    private Date begin_date;
+    private LocalDate begin_date;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     @Column(name = "end_date")
-    private Date end_date;
+    private LocalDate end_date;
 
     public Integer getId() {
         return id;
@@ -52,19 +56,19 @@ public class Rate {
         this.surcharge = surcharge;
     }
 
-    public Date getBegin_date() {
+    public LocalDate getBegin_date() {
         return begin_date;
     }
 
-    public void setBegin_date(Date begin_date) {
+    public void setBegin_date(LocalDate begin_date) {
         this.begin_date = begin_date;
     }
 
-    public Date getEnd_date() {
+    public LocalDate getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(LocalDate end_date) {
         this.end_date = end_date;
     }
 }

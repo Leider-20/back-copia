@@ -1,13 +1,25 @@
 package co.udea.ssmu.api.model.jpa.dto.rates;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class RateDTO {
 
     private Integer id;
     private Integer price;
     private Integer surcharge;
-    private Date begin_date;
-    private Date end_date;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
+    private LocalDate begin_date;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
+    private LocalDate end_date;
 
     @Override
     public String toString() {
@@ -20,7 +32,7 @@ public class RateDTO {
                 '}';
     }
 
-    public RateDTO(Integer id, Integer price, Integer surcharge, Date begin_date, Date end_date) {
+    public RateDTO(Integer id, Integer price, Integer surcharge, LocalDate begin_date, LocalDate end_date) {
         this.id = id;
         this.price = price;
         this.surcharge = surcharge;
@@ -52,19 +64,19 @@ public class RateDTO {
         this.surcharge = surcharge;
     }
 
-    public Date getBegin_date() {
+    public LocalDate getBegin_date() {
         return begin_date;
     }
 
-    public void setBegin_date(Date begin_date) {
+    public void setBegin_date(LocalDate begin_date) {
         this.begin_date = begin_date;
     }
 
-    public Date getEnd_date() {
+    public LocalDate getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(LocalDate end_date) {
         this.end_date = end_date;
     }
 }
