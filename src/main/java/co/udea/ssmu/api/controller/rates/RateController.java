@@ -21,17 +21,17 @@ import java.util.List;
 @Tag(name = "Rates", description = "Query basic transportation rates")
 @RestController
 @RequestMapping("/rates")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class RateController {
     private final RateFacade rateFacade;
     private final Messages messages;
 
-    public RateController(RateFacade rateFacade, Messages messages){
+    public RateController(RateFacade rateFacade, Messages messages) {
         this.rateFacade = rateFacade;
         this.messages = messages;
     }
 
-    //POST: guarda una tarifa de transporte sin parada
+    // POST: guarda una tarifa de transporte sin parada
     @PostMapping("/transportation")
     @Operation(summary = "Permite guardar tarifas de transporte sin paradas")
     @ApiResponses({
@@ -39,11 +39,12 @@ public class RateController {
                     @Content(schema = @Schema(implementation = RateDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
             }, description = "La tarifa fue guardada exitosamente"),
             @ApiResponse(responseCode = "400", description = "La petición es inválida"),
-            @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")})
+            @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta") })
     public ResponseEntity<StandardResponse<RateDTO>> save(@Valid @RequestBody RateDTO rateDTO) {
-        //System.out.println("########JSON deserializado: " + rateDTO.toString());
-        //System.out.println("#####################DTO recibido: " + rateDTO.toString());
-        //System.out.println();
+        // System.out.println("########JSON deserializado: " + rateDTO.toString());
+        // System.out.println("#####################DTO recibido: " +
+        // rateDTO.toString());
+        // System.out.println();
 
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("rates.save.successful"),
@@ -51,14 +52,14 @@ public class RateController {
 
     }
 
-    //lista todas las tarifas existentes
+    // lista todas las tarifas existentes
     @GetMapping("/listAll")
     public ResponseEntity<List<RateDTO>> getAllRates() {
         List<RateDTO> rates = rateFacade.getAllRates();
         return ResponseEntity.ok(rates);
     }
 
-    //lista tarifa por id
+    // lista tarifa por id
     @GetMapping("/{id}")
     public ResponseEntity<RateDTO> getRateById(@PathVariable Integer id) {
         RateDTO rate = rateFacade.getRateById(id);
@@ -70,6 +71,3 @@ public class RateController {
     }
 
 }
-
-
-
