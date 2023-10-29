@@ -10,3 +10,8 @@ spring:
     active: dev
   application:
     name: ssmu-api
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: true
