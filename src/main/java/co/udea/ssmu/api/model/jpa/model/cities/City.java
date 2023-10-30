@@ -2,6 +2,8 @@ package co.udea.ssmu.api.model.jpa.model.cities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,7 +20,7 @@ public class City {
 
     @NotNull
     @Column(name = "percentage")
-    private Integer percentage;
+    private BigDecimal percentage;
 
     public Integer getId() {
         return id;
@@ -28,11 +30,11 @@ public class City {
         return name;
     }
 
-    public Integer getPercentage() {
+    public BigDecimal getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
+    public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
     }
 }

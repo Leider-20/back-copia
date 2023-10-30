@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,8 @@ public class CityController {
     @PutMapping("/{cityId}/percentage")
     public void updateCityPercentage(
             @PathVariable Integer cityId,
-            @RequestBody Map<String, Integer> requestBody) {
-        Integer newPercentage = requestBody.get("newPercentage");
+            @RequestBody Map<String, BigDecimal> requestBody) {
+        BigDecimal newPercentage = requestBody.get("newPercentage");
         cityFacade.updateCityPercentage(cityId, newPercentage);
     }
 

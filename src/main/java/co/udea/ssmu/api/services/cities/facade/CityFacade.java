@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -24,7 +25,7 @@ public class CityFacade {
         return cityService.getAllCityNames();
     }
 
-    public void updateCityPercentage(Integer cityId, Integer newPercentage) {
+    public void updateCityPercentage(Integer cityId, BigDecimal newPercentage) {
         cityService.updateCityPercentage(cityId, newPercentage);
     }
 }

@@ -1,5 +1,6 @@
 package co.udea.ssmu.api.model.jpa.dto.rates;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class RateDTO {
 
     private Integer id;
     private Integer price;
-    private Integer surcharge;
+    private BigDecimal surcharge;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private LocalDate begin_date;
@@ -32,7 +33,7 @@ public class RateDTO {
                 '}';
     }
 
-    public RateDTO(Integer id, Integer price, Integer surcharge, LocalDate begin_date, LocalDate end_date) {
+    public RateDTO(Integer id, Integer price, BigDecimal surcharge, LocalDate begin_date, LocalDate end_date) {
         this.id = id;
         this.price = price;
         this.surcharge = surcharge;
@@ -56,11 +57,11 @@ public class RateDTO {
         this.price = price;
     }
 
-    public Integer getSurcharge() {
+    public BigDecimal getSurcharge() {
         return surcharge;
     }
 
-    public void setSurcharge(Integer surcharge) {
+    public void setSurcharge(BigDecimal surcharge) {
         this.surcharge = surcharge;
     }
 

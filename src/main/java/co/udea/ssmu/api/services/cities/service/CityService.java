@@ -1,15 +1,16 @@
 package co.udea.ssmu.api.services.cities.service;
 
-import co.udea.ssmu.api.model.jpa.dto.cities.CityDTO;
-import co.udea.ssmu.api.model.jpa.model.cities.City;
-import co.udea.ssmu.api.model.jpa.repository.cities.ICityRepository;
-import co.udea.ssmu.api.utils.exception.CityNotFoundException;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import co.udea.ssmu.api.model.jpa.dto.cities.CityDTO;
+import co.udea.ssmu.api.model.jpa.model.cities.City;
+import co.udea.ssmu.api.model.jpa.repository.cities.ICityRepository;
+import co.udea.ssmu.api.utils.exception.CityNotFoundException;
 
 @Service
 public class CityService {
@@ -28,7 +29,7 @@ public class CityService {
         return cityDTOs;
     }
 
-    public void updateCityPercentage(Integer cityId, Integer newPercentage) {
+    public void updateCityPercentage(Integer cityId, BigDecimal newPercentage) {
         City city = cityRepository.findById(cityId).orElse(null);
         if (city != null) {
             city.setPercentage(newPercentage);

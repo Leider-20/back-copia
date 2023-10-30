@@ -1,11 +1,13 @@
 package co.udea.ssmu.api.model.jpa.dto.cities;
 
+import java.math.BigDecimal;
+
 public class CityDTO {
     private Integer id;
     private String name;
-    private Integer percentage;
+    private BigDecimal percentage;
 
-    public CityDTO(Integer id, String name, Integer percentage) {
+    public CityDTO(Integer id, String name, BigDecimal percentage) {
         this.id = id;
         this.name = name;
         this.percentage = percentage;
@@ -23,11 +25,11 @@ public class CityDTO {
         this.name = name;
     }
 
-    public Integer getPercentage() {
+    public BigDecimal getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
+    public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
     }
 }
