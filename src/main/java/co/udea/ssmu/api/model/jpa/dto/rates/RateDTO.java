@@ -1,11 +1,6 @@
 package co.udea.ssmu.api.model.jpa.dto.rates;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

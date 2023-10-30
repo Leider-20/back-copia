@@ -27,7 +27,7 @@ public class Rate {
     private Integer price;
 
     @Column(name = "surcharge")
-    private Integer surcharge;
+    private BigDecimal surcharge;
 
     @NotNull
     @Temporal(TemporalType.DATE)
@@ -55,11 +55,11 @@ public class Rate {
         this.price = price;
     }
 
-    public Integer getSurcharge() {
+    public BigDecimal getSurcharge() {
         return surcharge;
     }
 
-    public void setSurcharge(Integer surcharge) {
+    public void setSurcharge(BigDecimal surcharge) {
         this.surcharge = surcharge;
     }
 
