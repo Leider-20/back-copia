@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import co.udea.ssmu.api.model.jpa.dto.policies.PolicyDTO;
 import co.udea.ssmu.api.model.jpa.model.policies.Policy;
 import co.udea.ssmu.api.model.jpa.repository.policies.IPolicyRepository;
-import co.udea.ssmu.api.utils.exception.PolicyNotFoundException;
 
 @Service
 public class PolicyService {
