@@ -1,15 +1,14 @@
 package co.udea.ssmu.api.services.cities.facade;
 
-import co.udea.ssmu.api.model.jpa.dto.cities.CityDTO;
-import co.udea.ssmu.api.model.jpa.mapper.cities.ICityMapper;
-import co.udea.ssmu.api.services.cities.service.CityService;
+import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.List;
+import co.udea.ssmu.api.model.jpa.dto.cities.CityDTO;
+import co.udea.ssmu.api.services.cities.service.CityService;
 
 @Service
 @Transactional

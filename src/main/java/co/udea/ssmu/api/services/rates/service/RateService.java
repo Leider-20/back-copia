@@ -1,22 +1,19 @@
 package co.udea.ssmu.api.services.rates.service;
 
-import co.udea.ssmu.api.model.jpa.dto.rates.RateDTO;
-import co.udea.ssmu.api.model.jpa.model.rates.Rate;
-import co.udea.ssmu.api.model.jpa.repository.rates.IRateRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.TimeZone;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import co.udea.ssmu.api.model.jpa.model.rates.Rate;
+import co.udea.ssmu.api.model.jpa.repository.rates.IRateRepository;
 
 @Service
 @Transactional
