@@ -3,6 +3,7 @@ package co.udea.ssmu.api.model.jpa.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 @Data
 @Entity
 public class Contacto {

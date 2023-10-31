@@ -1,9 +1,10 @@
 package co.udea.ssmu.api.model.jpa.model;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.Date;
 @Entity
 @Data
 public class Solicitud {
@@ -13,10 +14,12 @@ public class Solicitud {
     @Column(name = "solicitud_id")
     private Long solicitudId;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conductor_id")
     private Conductor conductor;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
     private Solicitud solicitud;
