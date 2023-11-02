@@ -1,21 +1,19 @@
 package co.udea.ssmu.api.model.jpa.dto;
 
-import co.udea.ssmu.api.model.jpa.model.Grupo;
-import co.udea.ssmu.api.model.jpa.model.TipoUsuario;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDTO {
-    private long id;
+    
+    private long idUsuario;
     private String nombre;
     private String apellido;
-    private Grupo grupo;
-    private TipoUsuario tipoUsuario; 
+    private long grupo;
+    private long tipoUsuario; 
     private String celular;
     private String email;
     private String password;

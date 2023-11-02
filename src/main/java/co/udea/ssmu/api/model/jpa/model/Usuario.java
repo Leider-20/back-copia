@@ -2,11 +2,15 @@ package co.udea.ssmu.api.model.jpa.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +31,8 @@ public class Usuario {
     
     @Id
     @Column(name = "id_usuario")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario_generator")
+    @SequenceGenerator(name="seq_usuario_generator", sequenceName = "SEQ_USUARIO", allocationSize=1)
     private long idUsuario;
 
     @ManyToOne
@@ -47,6 +53,7 @@ public class Usuario {
     private String celular;
 
     @Column(name="email", nullable = false)
+    @Email
     private String email;
     
     @Column(name="password", nullable = false)
@@ -55,10 +62,10 @@ public class Usuario {
     @Column(name="nro_documento", nullable = false)
     private String nroDocumento;
 
-    @Column(name="rol", nullable = false)
+    @Column(name="rol", nullable = true, columnDefinition = "VARCHAR2(10) DEFAULT 'usuario'")
     private String rol;
 
-    @Column(name="nro_servicios", nullable = false)
+    @Column(name="nro_servicios", nullable = true, columnDefinition = "VARCHAR2(10) DEFAULT '0'")
     private String nroServicios;
 
 }
