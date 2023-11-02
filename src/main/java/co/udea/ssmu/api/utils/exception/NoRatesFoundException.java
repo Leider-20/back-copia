@@ -1,5 +1,7 @@
 package co.udea.ssmu.api.utils.exception;
 
 public class NoRatesFoundException extends RuntimeException {
-    super(message);
+    public NoRatesFoundException(String message) {
+        super(message);
+    }
 }
