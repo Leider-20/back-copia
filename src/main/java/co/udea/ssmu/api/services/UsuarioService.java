@@ -1,6 +1,5 @@
 package co.udea.ssmu.api.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,6 @@ public class UsuarioService {
     private static final String USUARIO_NO_EXISTE = "El usuario no existe";
     private static final String USUARIO_YA_EXISTE = "Ya existe un usuario con este email o número de cédula usuario  existe";
     
-    @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository, TipoUsuarioRepository tipoUsuarioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.tipoUsuarioRepository = tipoUsuarioRepository;
@@ -38,7 +36,7 @@ public class UsuarioService {
     }
 
     public Usuario crearUsuario(UsuarioDTO usuarioDTO) {
-        Usuario usuario = UsuarioMapper.convertirEntidad(usuarioDTO);
+        Usuario usuario = UsuarioMapper.crearUsuarioEntidad(usuarioDTO);
         if (this.existeUsuario(usuario)) {
             throw new DataDuplicatedException(USUARIO_YA_EXISTE);
         }
@@ -71,9 +69,11 @@ public class UsuarioService {
             usuario.setPassword(password);
         }
     }
+    
 
     private void asignarTipoUsuario(Usuario usuario, long idTipoUsuario) {
         TipoUsuario tipoNuevoUsuario = tipoUsuarioRepository.findById(idTipoUsuario).orElse(null);
+        
         usuario.setTipoUsuario(tipoNuevoUsuario);
     }
 
