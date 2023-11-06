@@ -1,7 +1,7 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.IConductorServicio;
-import co.udea.ssmu.api.model.jpa.model.Conductor;
+import co.udea.ssmu.api.services.IDocumentosServicio;
+import co.udea.ssmu.api.model.jpa.model.Documentos;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,41 +16,37 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/conductores")
-public class ConductorControlador {
+@RequestMapping("/api/v1/documentos")
+public class DocumentosControlador {
 
     @Autowired
-    private IConductorServicio conductorServicio;
+    private IDocumentosServicio documentosServicio;
 
-    //Buscar todos los conductores
     @GetMapping
-    public ResponseEntity<?>ListarConductor(){
-        return ResponseEntity.ok(this.conductorServicio.findAllConductor());
-    }
+    public ResponseEntity<?> ListarDocumentos() {return ResponseEntity.ok(this.documentosServicio.findAllDocumentos());}
 
-    //Buscar conductor por ID
     @GetMapping("{id}")
-    public ResponseEntity<?>mostrarConductor(@PathVariable Long id){
-        Conductor conductor = null; //Mensaje de exito o error
+    public ResponseEntity<?>mostrarDocumento(@PathVariable Long id){
+        Documentos documentos = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            conductor = this.conductorServicio.getConductor(id);
+            documentos = this.documentosServicio.findDocumento(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (conductor == null){
-           response.put("mensaje", "El conductor identificado con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
-           return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        if (documentos == null){
+            response.put("mensaje", "El documento identificado con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(conductor, HttpStatus.OK);
+        return new ResponseEntity<>(documentos, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?>guardarConductor(@Valid @RequestBody Conductor conductor, BindingResult result){
-        Conductor conductorNuevo = null;
+    public ResponseEntity<?>guardarDocumento(@Valid @RequestBody Documentos documentos, BindingResult result){
+        Documentos documentosNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -62,14 +58,15 @@ public class ConductorControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            conductorNuevo = this.conductorServicio.saveConductor(conductor);
+            documentosNuevo = this.documentosServicio.saveDocumento(documentos);
         } catch (DataAccessException e){
-            response.put("mensaje", "Error al introducir un nuevo conductor a la base de datos");
+            response.put("mensaje", "Error al introducir un nuevo documento a la base de datos");
         }
-        response.put("mensaje", "El conductor se ha REGISTRADO con exito");
-        response.put("conductor", conductorNuevo);
+        response.put("mensaje", "El documento se ha REGISTRADO con exito");
+        response.put("documento", documentosNuevo);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 
 
 

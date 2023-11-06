@@ -1,7 +1,8 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.IConductorServicio;
-import co.udea.ssmu.api.model.jpa.model.Conductor;
+
+import co.udea.ssmu.api.services.IManagerServicio;
+import co.udea.ssmu.api.model.jpa.model.Manager;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,41 +17,37 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/conductores")
-public class ConductorControlador {
+@RequestMapping("/api/v1/manager")
+public class ManagerControlador {
 
     @Autowired
-    private IConductorServicio conductorServicio;
+    private IManagerServicio managerServicio;
 
-    //Buscar todos los conductores
     @GetMapping
-    public ResponseEntity<?>ListarConductor(){
-        return ResponseEntity.ok(this.conductorServicio.findAllConductor());
-    }
+    public ResponseEntity<?> ListarManager() {return ResponseEntity.ok(this.managerServicio.findAllManager());}
 
-    //Buscar conductor por ID
     @GetMapping("{id}")
-    public ResponseEntity<?>mostrarConductor(@PathVariable Long id){
-        Conductor conductor = null; //Mensaje de exito o error
+    public ResponseEntity<?>mostrarManager(@PathVariable Long id){
+        Manager manager = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            conductor = this.conductorServicio.getConductor(id);
+            manager = this.managerServicio.findManager(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (conductor == null){
-           response.put("mensaje", "El conductor identificado con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
-           return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        if (manager == null){
+            response.put("mensaje", "El manager identificado con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(conductor, HttpStatus.OK);
+        return new ResponseEntity<>(manager, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?>guardarConductor(@Valid @RequestBody Conductor conductor, BindingResult result){
-        Conductor conductorNuevo = null;
+    public ResponseEntity<?>guardarManager(@Valid @RequestBody Manager manager, BindingResult result){
+        Manager managerNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -62,16 +59,13 @@ public class ConductorControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            conductorNuevo = this.conductorServicio.saveConductor(conductor);
+            managerNuevo = this.managerServicio.saveManager(manager);
         } catch (DataAccessException e){
-            response.put("mensaje", "Error al introducir un nuevo conductor a la base de datos");
+            response.put("mensaje", "Error al introducir un nuevo manager a la base de datos");
         }
-        response.put("mensaje", "El conductor se ha REGISTRADO con exito");
-        response.put("conductor", conductorNuevo);
+        response.put("mensaje", "El manager se ha REGISTRADO con exito");
+        response.put("manager", managerNuevo);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
-
-
 
 }
