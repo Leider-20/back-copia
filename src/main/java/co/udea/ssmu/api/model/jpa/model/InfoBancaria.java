@@ -31,8 +31,4 @@ public class InfoBancaria {
 
     @Column(length = 40, name = "entidad_Bancaria")
     private String entidadBancariaa;
-
-    @Digits(integer = 3, fraction = 1)
-    private BigDecimal tarifa;
-
 }

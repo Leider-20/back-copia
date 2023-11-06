@@ -36,7 +36,7 @@ public class Conductor {
     private String celular;
 
     @Min(value = 18)
-    private int edad;
+    private Integer edad;
 
     @Column(length = 120)
     private String direccion;
@@ -48,16 +48,12 @@ public class Conductor {
     @Column(name = "fecha_Vencimiento_Licencia")
     private Date fechaVencimientoLicencia;
 
-
     @Column(length = 30, name = "estado_actividad")
     private String estadoActividad;
 
     @Column(precision = 2, scale = 1, name = "calificacion_conductor")
     @Digits(integer = 2, fraction = 1)
     private BigDecimal calificacionConductor;
-
-    @Column(name = "numero_Servicios")
-    private int numeroServicios;
 
     @Column(length = 45)
     private String clasificacion;
@@ -66,7 +62,7 @@ public class Conductor {
     private String ciudad;
 
     @Column()
-    private int strikes;
+    private Integer strikes;
 
     @Column(length = 7)
     private String placa;
@@ -81,7 +77,7 @@ public class Conductor {
     private String descripcionVehiculo;
 
     @Column(name = "anio_Vehiculo")
-    private int anioVehiculo;
+    private Integer anioVehiculo;
 
     @Column(length = 17, name = "numero_registro_vehiculo")
     private String numeroRegistroVehiculo;

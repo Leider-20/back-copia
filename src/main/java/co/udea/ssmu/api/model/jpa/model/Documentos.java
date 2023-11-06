@@ -20,31 +20,24 @@ public class Documentos {
     @JoinColumn(name = "conductor_id")
     private Conductor conductor;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] licencia;
+    @Column(length = 200)
+    private String licencia;
 
-    @Lob
-    @Column(columnDefinition = "BLOB", name = "doc_cedula")
-    private byte[] docCedula;
+    @Column(length = 200, name = "doc_cedula")
+    private String docCedula;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] soat;
+    @Column(length = 200, name = "seguro")
+    private String soat;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] tecnomecanica;
+    @Column(length = 200)
+    private String tecnomecanica;
 
-    @Lob
-    @Column(columnDefinition = "BLOB", name = "tarjeta_propiedad")
-    private byte[] tarjetaPropiedad;
+    @Column(length = 200, name = "tarjeta_propiedad")
+    private String tarjetaPropiedad;
 
-    @Lob
-    @Column(columnDefinition = "BLOB", name = "foto_conductor")
-    private byte[] fotoConductor;
+    @Column(length = 200, name = "foto_conductor")
+    private String fotoConductor;
 
-    @Lob
-    @Column(columnDefinition = "BLOB", name = "foto_vehiculo")
-    private byte[] fotoVehiculo;
+    @Column(length = 200, name = "foto_vehiculo")
+    private String fotoVehiculo;
 }

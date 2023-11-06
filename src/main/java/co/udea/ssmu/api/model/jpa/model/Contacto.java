@@ -25,4 +25,6 @@ public class Contacto {
     @Column(length = 20, name = "tipo_Relacion")
     private String tipoRelacion;
 
+    @Column(length = 10)
+    private String direccion;
 }

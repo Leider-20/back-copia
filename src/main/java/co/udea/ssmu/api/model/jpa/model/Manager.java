@@ -13,11 +13,20 @@ public class Manager {
     private Long managerId;
 
     @Column(length = 45)
-    private String usuario;
-
-    @Column(length = 45)
     private String nombre;
 
-    @Column(length = 45)
-    private String contrasena;
+    @Column(length = 50)
+    private String email;
+
+    @Column(length = 10)
+    private String cedula;
+
+    @Column(length = 10)
+    private String rol;
+
+    @Column(length = 10, name = "numero_Servicios")
+    private String numeroServicios;
+
+    @Column(length = 50, name = "id_tipo_manager")
+    private Long idTipoManager;
 }
