@@ -2,6 +2,7 @@ package co.udea.ssmu.api.model.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.persistence.Lob;
 import lombok.Data;
 
 
