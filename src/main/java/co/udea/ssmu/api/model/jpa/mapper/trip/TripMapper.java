@@ -1,7 +1,7 @@
 package co.udea.ssmu.api.model.jpa.mapper.trip;
 
-import co.udea.ssmu.api.model.jpa.dto.trip.TripDTO;
-import co.udea.ssmu.api.model.jpa.model.trip.Trip;
+import co.udea.ssmu.api.model.jpa.dto.examples.trip.TripDTO;
+import co.udea.ssmu.api.model.jpa.model.examples.trip.Trip;
 import co.udea.ssmu.api.model.jpa.mapper.EntityMapper;
 import org.mapstruct.Mapper;
 

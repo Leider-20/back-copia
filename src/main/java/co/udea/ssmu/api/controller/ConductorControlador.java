@@ -1,6 +1,6 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.IConductorServicio;
+import co.udea.ssmu.api.services.conductor.IConductorServicio;
 import co.udea.ssmu.api.model.jpa.model.Conductor;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

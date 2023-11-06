@@ -1,6 +1,6 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.IDocumentosServicio;
+import co.udea.ssmu.api.services.documentos.IDocumentosServicio;
 import co.udea.ssmu.api.model.jpa.model.Documentos;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

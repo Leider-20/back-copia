@@ -1,7 +1,7 @@
 package co.udea.ssmu.api.controller;
 
 
-import co.udea.ssmu.api.services.IManagerServicio;
+import co.udea.ssmu.api.services.manager.IManagerServicio;
 import co.udea.ssmu.api.model.jpa.model.Manager;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

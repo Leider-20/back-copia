@@ -1,6 +1,6 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.ISolicitudServicio;
+import co.udea.ssmu.api.services.solicitud.ISolicitudServicio;
 import co.udea.ssmu.api.model.jpa.model.Solicitud;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

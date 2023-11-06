@@ -1,6 +1,6 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.IInfoBancariaServicio;
+import co.udea.ssmu.api.services.infoBancaria.IInfoBancariaServicio;
 import co.udea.ssmu.api.model.jpa.model.InfoBancaria;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

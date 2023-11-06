@@ -1,6 +1,6 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.IContactoServicio;
+import co.udea.ssmu.api.services.contacto.IContactoServicio;
 import co.udea.ssmu.api.model.jpa.model.Contacto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
