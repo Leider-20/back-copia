@@ -12,7 +12,7 @@ public class SampleTestObjectTests {
 
     @BeforeEach
     public void setUp() {
-        testObject = new SimpletestObject();
+        testObject = new SampleTestObject();
     }
 
     @Test
