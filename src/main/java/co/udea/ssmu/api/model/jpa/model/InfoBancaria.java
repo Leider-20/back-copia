@@ -3,10 +3,7 @@ package co.udea.ssmu.api.model.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import lombok.Data;
-
-import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -30,5 +27,45 @@ public class InfoBancaria {
     private String tipoCuenta;
 
     @Column(length = 40, name = "entidad_Bancaria")
-    private String entidadBancariaa;
+    private String entidadBancaria;
+
+    public Long getIdBancario() {
+        return idBancario;
+    }
+
+    public void setIdBancario(Long idBancario) {
+        this.idBancario = idBancario;
+    }
+
+    public Conductor getConductor() {
+        return conductor;
+    }
+
+    public void setConductor(Conductor conductor) {
+        this.conductor = conductor;
+    }
+
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
+
+    public String getEntidadBancaria() {
+        return entidadBancaria;
+    }
+
+    public void setEntidadBancaria(String entidadBancaria) {
+        this.entidadBancaria = entidadBancaria;
+    }
 }
