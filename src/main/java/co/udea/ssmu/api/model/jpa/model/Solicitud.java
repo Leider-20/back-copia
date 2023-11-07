@@ -22,7 +22,7 @@ public class Solicitud {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
-    private Solicitud solicitud;
+    private Manager manager;
 
     @Column(length = 15)
     private String cedula;
@@ -54,12 +54,12 @@ public class Solicitud {
         this.conductor = conductor;
     }
 
-    public Solicitud getSolicitud() {
-        return solicitud;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setSolicitud(Solicitud solicitud) {
-        this.solicitud = solicitud;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public String getCedula() {
