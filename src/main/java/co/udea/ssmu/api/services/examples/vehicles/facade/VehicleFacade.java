@@ -1,7 +1,7 @@
 package co.udea.ssmu.api.services.examples.vehicles.facade;
 
 import co.udea.ssmu.api.model.jpa.dto.examples.vehicles.VehicleDTO;
-import co.udea.ssmu.api.model.jpa.mapper.vehicles.VehicleMapper;
+import co.udea.ssmu.api.model.jpa.mapper.examples.vehicles.VehicleMapper;
 import co.udea.ssmu.api.model.jpa.model.examples.vehicles.Vehicle;
 import co.udea.ssmu.api.services.examples.vehicles.service.VehicleService;
 import org.springframework.data.domain.Page;

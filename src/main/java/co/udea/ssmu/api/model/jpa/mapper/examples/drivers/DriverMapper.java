@@ -1,4 +1,4 @@
-package co.udea.ssmu.api.model.jpa.mapper.drivers;
+package co.udea.ssmu.api.model.jpa.mapper.examples.drivers;
 
 import co.udea.ssmu.api.model.jpa.dto.examples.drivers.DriverDTO;
 import co.udea.ssmu.api.model.jpa.model.examples.drivers.Driver;

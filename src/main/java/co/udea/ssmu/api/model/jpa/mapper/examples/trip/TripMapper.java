@@ -1,4 +1,4 @@
-package co.udea.ssmu.api.model.jpa.mapper.trip;
+package co.udea.ssmu.api.model.jpa.mapper.examples.trip;
 
 import co.udea.ssmu.api.model.jpa.dto.examples.trip.TripDTO;
 import co.udea.ssmu.api.model.jpa.model.examples.trip.Trip;
