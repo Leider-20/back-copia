@@ -2,7 +2,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         order_inserts: true
@@ -17,9 +17,9 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/ssmu-dev?serverTimezone=America/Bogota
-    username: username
-    password: password
+    url: jdbc:postgresql://db.jsynrsfujilozitwtmjc.supabase.co:5432/postgres
+    username: postgres
+    password: postgres123+
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
@@ -34,5 +34,5 @@ ssmu-api:
 
 logging:
   level:
-    root: DEBUG
-    org.springframework: DEBUG
+    root: info
+    org.springframework: info
