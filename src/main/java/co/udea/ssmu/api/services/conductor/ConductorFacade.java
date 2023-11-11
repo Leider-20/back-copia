@@ -22,7 +22,7 @@ public class ConductorFacade {
         return conductorMapper.toDto(conductorImplementacion.saveConductor(conductorMapper.toEntity(conductor)));
     }
 
-    public List<ConductorDTO> findByAll() {
+    public List<ConductorDTO> findAll() {
         return conductorMapper.toDto(conductorImplementacion.findAllConductor());
     }
 
