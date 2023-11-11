@@ -1,7 +1,9 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.infoBancaria.IInfoBancariaServicio;
-import co.udea.ssmu.api.model.jpa.model.InfoBancaria;
+import co.udea.ssmu.api.services.infoBancaria.InfoBancariaFacade;
+import co.udea.ssmu.api.model.jpa.dto.InfoBancariaDTO;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,18 +22,18 @@ import java.util.stream.Collectors;
 public class InfoBancariaControlador {
 
     @Autowired
-    private IInfoBancariaServicio iInfoBancariaServicio;
+    private InfoBancariaFacade infoBancariaFacade;
 
-    @GetMapping
-    public ResponseEntity<?> ListarInfoBancaria() {return ResponseEntity.ok(this.iInfoBancariaServicio.findAllInfoBancaria());}
+    @GetMapping("/get-all")
+    public ResponseEntity<?> ListarInfoBancaria() {return ResponseEntity.ok(this.infoBancariaFacade.findAll());}
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?>mostrarInfoBancaria(@PathVariable Long id){
-        InfoBancaria infoBancaria = null; //Mensaje de exito o error
+        InfoBancariaDTO infoBancaria = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            infoBancaria = this.iInfoBancariaServicio.findInfoBancaria(id);
+            infoBancaria = this.infoBancariaFacade.get(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,9 +46,9 @@ public class InfoBancariaControlador {
         return new ResponseEntity<>(infoBancaria, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?>guardarInfoBancaria(@Valid @RequestBody InfoBancaria infoBancaria, BindingResult result){
-        InfoBancaria infoBancariaNueva = null;
+    @PostMapping("/save")
+    public ResponseEntity<?>guardarInfoBancaria(@Valid @RequestBody InfoBancariaDTO infoBancaria, BindingResult result){
+        InfoBancariaDTO infoBancariaNueva = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -58,7 +60,7 @@ public class InfoBancariaControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            infoBancariaNueva = this.iInfoBancariaServicio.saveInfoBancaria(infoBancaria);
+            infoBancariaNueva = this.infoBancariaFacade.save(infoBancaria);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir una nueva información bancaria a la base de datos");
         }
@@ -67,5 +69,18 @@ public class InfoBancariaControlador {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteInfoBancaria(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+
+        try{
+            this.infoBancariaFacade.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al consultar");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 
 }

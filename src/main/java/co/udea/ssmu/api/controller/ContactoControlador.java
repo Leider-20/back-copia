@@ -1,7 +1,9 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.contacto.IContactoServicio;
-import co.udea.ssmu.api.model.jpa.model.Contacto;
+import co.udea.ssmu.api.services.contacto.ContactoFacade;
+import co.udea.ssmu.api.model.jpa.dto.ContactoDTO;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,18 +22,18 @@ import java.util.stream.Collectors;
 public class ContactoControlador {
 
     @Autowired
-    private IContactoServicio contactoServicio;
+    private ContactoFacade contactoFacade;
 
-    @GetMapping
-    public ResponseEntity<?> ListarContacto() {return ResponseEntity.ok(this.contactoServicio.findAllContacto());}
+    @GetMapping("/get-all")
+    public ResponseEntity<?> ListarContacto() {return ResponseEntity.ok(this.contactoFacade.findAll());}
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?>mostrarContacto(@PathVariable Long id){
-        Contacto contacto = null; //Mensaje de exito o error
+        ContactoDTO contacto = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            contacto = this.contactoServicio.findContacto(id);
+            contacto = this.contactoFacade.get(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,9 +46,9 @@ public class ContactoControlador {
         return new ResponseEntity<>(contacto, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?>guardarContacto(@Valid @RequestBody Contacto contacto, BindingResult result){
-        Contacto contactoNuevo = null;
+    @PostMapping("/save")
+    public ResponseEntity<?>guardarContacto(@Valid @RequestBody ContactoDTO contacto, BindingResult result){
+        ContactoDTO contactoNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -58,7 +60,7 @@ public class ContactoControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            contactoNuevo = this.contactoServicio.saveContacto(contacto);
+            contactoNuevo = this.contactoFacade.save(contacto);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir un nuevo contacto a la base de datos");
         }
@@ -67,6 +69,18 @@ public class ContactoControlador {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteContacto(@PathVariable Long id){
+        //Mensaje de exito o error
+        Map<String, Object> response = new HashMap<>();
 
+        try{
+            this.contactoFacade.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al consultar");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }

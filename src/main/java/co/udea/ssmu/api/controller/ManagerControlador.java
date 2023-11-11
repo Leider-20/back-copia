@@ -1,8 +1,8 @@
 package co.udea.ssmu.api.controller;
 
 
-import co.udea.ssmu.api.services.manager.IManagerServicio;
-import co.udea.ssmu.api.model.jpa.model.Manager;
+import co.udea.ssmu.api.services.manager.ManagerFacade;
+import co.udea.ssmu.api.model.jpa.dto.ManagerDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
 public class ManagerControlador {
 
     @Autowired
-    private IManagerServicio managerServicio;
+    private ManagerFacade managerFacade;
 
-    @GetMapping
-    public ResponseEntity<?> ListarManager() {return ResponseEntity.ok(this.managerServicio.findAllManager());}
+    @GetMapping("/get-all")
+    public ResponseEntity<?> ListarManager() {return ResponseEntity.ok(this.managerFacade.findAll());}
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?>mostrarManager(@PathVariable Long id){
-        Manager manager = null; //Mensaje de exito o error
+        ManagerDTO manager = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            manager = this.managerServicio.findManager(id);
+            manager = this.managerFacade.get(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,9 +45,9 @@ public class ManagerControlador {
         return new ResponseEntity<>(manager, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?>guardarManager(@Valid @RequestBody Manager manager, BindingResult result){
-        Manager managerNuevo = null;
+    @PostMapping("/save")
+    public ResponseEntity<?>guardarManager(@Valid @RequestBody ManagerDTO manager, BindingResult result){
+        ManagerDTO managerNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -59,7 +59,7 @@ public class ManagerControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            managerNuevo = this.managerServicio.saveManager(manager);
+            managerNuevo = this.managerFacade.save(manager);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir un nuevo manager a la base de datos");
         }
@@ -68,4 +68,17 @@ public class ManagerControlador {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteManager(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+
+        try{
+            this.managerFacade.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al consultar");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }

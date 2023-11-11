@@ -1,7 +1,9 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.conductor.IConductorServicio;
-import co.udea.ssmu.api.model.jpa.model.Conductor;
+import co.udea.ssmu.api.services.conductor.ConductorFacade;
+import co.udea.ssmu.api.model.jpa.dto.ConductorDTO;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -18,24 +20,24 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/conductores")
 public class ConductorControlador {
-
     @Autowired
-    private IConductorServicio conductorServicio;
+    private ConductorFacade conductorFacade;
 
     //Buscar todos los conductores
-    @GetMapping
+    @GetMapping("/get-all")
     public ResponseEntity<?>ListarConductor(){
-        return ResponseEntity.ok(this.conductorServicio.findAllConductor());
+        return ResponseEntity.ok(this.conductorFacade.findAll());
     }
 
     //Buscar conductor por ID
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?>mostrarConductor(@PathVariable Long id){
-        Conductor conductor = null; //Mensaje de exito o error
+        ConductorDTO conductor = null;
+        //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            conductor = this.conductorServicio.getConductor(id);
+            conductor = this.conductorFacade.get(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -48,9 +50,9 @@ public class ConductorControlador {
         return new ResponseEntity<>(conductor, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?>guardarConductor(@Valid @RequestBody Conductor conductor, BindingResult result){
-        Conductor conductorNuevo = null;
+    @PostMapping("/save")
+    public ResponseEntity<?>guardarConductor(@Valid @RequestBody ConductorDTO conductor, BindingResult result){
+        ConductorDTO conductorNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -62,7 +64,7 @@ public class ConductorControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            conductorNuevo = this.conductorServicio.saveConductor(conductor);
+            conductorNuevo = this.conductorFacade.save(conductor);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir un nuevo conductor a la base de datos");
         }
@@ -71,7 +73,18 @@ public class ConductorControlador {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteConductor(@PathVariable Long id){
+        //Mensaje de exito o error
+        Map<String, Object> response = new HashMap<>();
 
+        try{
+            this.conductorFacade.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al consultar");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }

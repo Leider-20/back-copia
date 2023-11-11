@@ -1,7 +1,9 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.documentos.IDocumentosServicio;
-import co.udea.ssmu.api.model.jpa.model.Documentos;
+import co.udea.ssmu.api.services.documentos.DocumentosFacade;
+import co.udea.ssmu.api.model.jpa.dto.DocumentosDTO;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,18 +22,18 @@ import java.util.stream.Collectors;
 public class DocumentosControlador {
 
     @Autowired
-    private IDocumentosServicio documentosServicio;
+    private DocumentosFacade documentosFacade;
 
-    @GetMapping
-    public ResponseEntity<?> ListarDocumentos() {return ResponseEntity.ok(this.documentosServicio.findAllDocumentos());}
+    @GetMapping("/get-all")
+    public ResponseEntity<?> ListarDocumentos() {return ResponseEntity.ok(this.documentosFacade.findAll());}
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?>mostrarDocumento(@PathVariable Long id){
-        Documentos documentos = null; //Mensaje de exito o error
+        DocumentosDTO documentos = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            documentos = this.documentosServicio.findDocumento(id);
+            documentos = this.documentosFacade.get(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,9 +46,9 @@ public class DocumentosControlador {
         return new ResponseEntity<>(documentos, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?>guardarDocumento(@Valid @RequestBody Documentos documentos, BindingResult result){
-        Documentos documentosNuevo = null;
+    @PostMapping("/save")
+    public ResponseEntity<?>guardarDocumento(@Valid @RequestBody DocumentosDTO documentos, BindingResult result){
+        DocumentosDTO documentosNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -58,7 +60,7 @@ public class DocumentosControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            documentosNuevo = this.documentosServicio.saveDocumento(documentos);
+            documentosNuevo = this.documentosFacade.save(documentos);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir un nuevo documento a la base de datos");
         }
@@ -67,8 +69,17 @@ public class DocumentosControlador {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteDocumentos(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
 
+        try{
+            this.documentosFacade.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al consultar");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-
-
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }

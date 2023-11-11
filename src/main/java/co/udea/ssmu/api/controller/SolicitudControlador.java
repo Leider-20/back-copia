@@ -1,7 +1,7 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.services.solicitud.ISolicitudServicio;
-import co.udea.ssmu.api.model.jpa.model.Solicitud;
+import co.udea.ssmu.api.services.solicitud.SolicitudFacade;
+import co.udea.ssmu.api.model.jpa.dto.SolicitudDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,18 +20,18 @@ import java.util.stream.Collectors;
 public class SolicitudControlador {
 
     @Autowired
-    private ISolicitudServicio solicitudServicio;
+    private SolicitudFacade solicitudFacade;
 
-    @GetMapping
-    public ResponseEntity<?> ListarSolicitud() {return ResponseEntity.ok(this.solicitudServicio.findAllSolicitud());}
+    @GetMapping("/get-all")
+    public ResponseEntity<?> ListarSolicitud() {return ResponseEntity.ok(this.solicitudFacade.findAll());}
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?>mostrarContacto(@PathVariable Long id){
-        Solicitud solicitud = null; //Mensaje de exito o error
+        SolicitudDTO solicitud = null; //Mensaje de exito o error
         Map<String, Object> response = new HashMap<>();
 
         try{
-            solicitud = this.solicitudServicio.findSolicitud(id);
+            solicitud = this.solicitudFacade.get(id);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al consultar");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,9 +44,9 @@ public class SolicitudControlador {
         return new ResponseEntity<>(solicitud, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<?>guardarSolicitud(@Valid @RequestBody Solicitud solicitud, BindingResult result){
-        Solicitud solicitudNueva = null;
+    @PostMapping("/save")
+    public ResponseEntity<?>guardarSolicitud(@Valid @RequestBody SolicitudDTO solicitud, BindingResult result){
+        SolicitudDTO solicitudNueva = null;
         Map<String, Object> response = new HashMap<>();
 
         if(result.hasErrors()){
@@ -58,7 +58,7 @@ public class SolicitudControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            solicitudNueva = this.solicitudServicio.saveSolicitud(solicitud);
+            solicitudNueva = this.solicitudFacade.save(solicitud);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir la nueva solicitud a la base de datos");
         }
@@ -67,4 +67,17 @@ public class SolicitudControlador {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteSolicitud(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+
+        try{
+            this.solicitudFacade.delete(id);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al consultar");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }
