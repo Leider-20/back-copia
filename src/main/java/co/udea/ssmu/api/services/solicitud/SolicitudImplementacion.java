@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class SolicitudImplementacion implements ISolicitudServicio{
 
     @Autowired
@@ -21,7 +22,6 @@ public class SolicitudImplementacion implements ISolicitudServicio{
 
     //POST
     @Override
-    @Transactional
     public Solicitud saveSolicitud(Solicitud solicitud) {return  solicitudRepositorio.save(solicitud);}
 
     //GET ID
@@ -31,6 +31,5 @@ public class SolicitudImplementacion implements ISolicitudServicio{
 
     //DELETE
     @Override
-    @Transactional
     public void deleteSolicitud(Long id) { solicitudRepositorio.deleteById(id);}
 }

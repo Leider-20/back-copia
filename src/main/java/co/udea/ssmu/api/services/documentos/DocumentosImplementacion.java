@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class DocumentosImplementacion implements IDocumentosServicio{
 
     @Autowired
@@ -21,7 +22,6 @@ public class DocumentosImplementacion implements IDocumentosServicio{
 
     //POST
     @Override
-    @Transactional
     public Documentos saveDocumento(Documentos documentos) {return documentosRepositorio.save(documentos);}
 
     //GET ID
@@ -31,7 +31,6 @@ public class DocumentosImplementacion implements IDocumentosServicio{
 
     //DELETE
     @Override
-    @Transactional
     public void deleteDocumento(Long id) {documentosRepositorio.deleteById(id);}
 
 }

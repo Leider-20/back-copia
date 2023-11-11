@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ManagerImplementacion implements  IManagerServicio{
 
     @Autowired
@@ -21,7 +22,6 @@ public class ManagerImplementacion implements  IManagerServicio{
 
     //POST
     @Override
-    @Transactional
     public Manager saveManager(Manager manager) {return managerRepositorio.save(manager);}
 
     //GET ID
@@ -30,7 +30,6 @@ public class ManagerImplementacion implements  IManagerServicio{
     public Manager findManager (Long id) {return managerRepositorio.findById(id).orElse(null);}
 
     @Override
-    @Transactional
     public void deleteManager (Long id) {managerRepositorio.deleteById(id);}
 
 }

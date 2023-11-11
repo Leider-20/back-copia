@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class InfoBancariaImplementacionServicio implements IInfoBancariaServicio {
+@Transactional
+public class InfoBancariaImplementacion implements IInfoBancariaServicio {
 
     @Autowired
     private InfoBancariaRepositorio infoBancariaRepositorio;
@@ -21,7 +22,6 @@ public class InfoBancariaImplementacionServicio implements IInfoBancariaServicio
 
     //POST
     @Override
-    @Transactional
     public InfoBancaria saveInfoBancaria(InfoBancaria infoBancaria) {return infoBancariaRepositorio.save(infoBancaria);}
 
     //GET ID
@@ -31,7 +31,6 @@ public class InfoBancariaImplementacionServicio implements IInfoBancariaServicio
 
     //DELETE
     @Override
-    @Transactional
     public void deleteInfoBancaria(Long id) { infoBancariaRepositorio.deleteById(id);}
 
 }

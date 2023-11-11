@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ConductorImplementacion implements IConductorServicio{
 
     @Autowired
@@ -21,7 +22,6 @@ public class ConductorImplementacion implements IConductorServicio{
     }
 
     @Override
-    @Transactional
     public Conductor saveConductor(Conductor conductor){
         return conductorRepositorio.save(conductor);
     }
@@ -31,8 +31,8 @@ public class ConductorImplementacion implements IConductorServicio{
     public Conductor getConductor(Long id){
         return conductorRepositorio.findById(id).orElse(null);
     }
+
     @Override
-    @Transactional
     public void deleteConductor(Long id){
         conductorRepositorio.deleteById(id);
     }
