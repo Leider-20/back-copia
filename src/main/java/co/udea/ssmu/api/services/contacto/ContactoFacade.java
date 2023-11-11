@@ -18,7 +18,7 @@ public class ContactoFacade {
         return contactoMapper.toDto(contactoImplementacion.saveContacto(contactoMapper.toEntity(contacto)));
     }
 
-    public List<ContactoDTO> findByAll() {
+    public List<ContactoDTO> findAll() {
         return contactoMapper.toDto(contactoImplementacion.findAllContacto());
     }
 
