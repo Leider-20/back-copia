@@ -20,7 +20,7 @@ public class SolicitudFacade {
         return solicitudMapper.toDto(solicitudImplementacion.saveSolicitud(solicitudMapper.toEntity(solicitud)));
     }
 
-    public SolicitudDTO get(Long id){return solicitudMapper.toDto(solicitudImplementacion.findSolicitud());}
+    public SolicitudDTO get(Long id){return solicitudMapper.toDto(solicitudImplementacion.findSolicitud(id));}
 
     public void delete(Long id){solicitudImplementacion.deleteSolicitud(id);}
 }
