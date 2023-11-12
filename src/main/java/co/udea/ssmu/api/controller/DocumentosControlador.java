@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,7 @@ public class DocumentosControlador {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?>guardarDocumento(@Valid @RequestBody DocumentosDTO documentos, BindingResult result){
+    public ResponseEntity<?>guardarDocumento(@Valid @RequestBody DocumentosDTO documentos, @RequestPart List<MultipartFile> files, BindingResult result){
         DocumentosDTO documentosNuevo = null;
         Map<String, Object> response = new HashMap<>();
 
@@ -60,7 +61,7 @@ public class DocumentosControlador {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            documentosNuevo = this.documentosFacade.save(documentos);
+            documentosNuevo = this.documentosFacade.save(documentos, files);
         } catch (DataAccessException e){
             response.put("mensaje", "Error al introducir un nuevo documento a la base de datos");
         }
