@@ -8,8 +8,8 @@ import co.udea.ssmu.api.utils.exception.DataBaseException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +26,8 @@ public class ConductorControlador {
 
     private static final String RESPONSE400 = "La petición es inválida";
     private static final String RESPONSE500 = "Error interno al procesar la respuesta";
+
+    @Autowired
     public ConductorControlador(ConductorFacade conductorFacade, Messages messages) {
         this.conductorFacade = conductorFacade;
         this.messages = messages;
@@ -33,13 +35,12 @@ public class ConductorControlador {
 
     //Buscar todos los conductores
     @GetMapping("/get-all")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "Los conductores fueron consultados exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
-    public ResponseEntity<StandardResponse<List<ConductorDTO>>>ListarConductor(){
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)},
+            description = "Los conductores fueron consultados exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
+    public ResponseEntity<StandardResponse<List<ConductorDTO>>> listarConductor(){
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("conductor.get.all.successful"),
                 conductorFacade.findAll()));
@@ -47,12 +48,11 @@ public class ConductorControlador {
 
     //Buscar conductor por ID
     @GetMapping("/get/{id}")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = ConductorDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "El conductor fue consultado exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = ConductorDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)},
+            description = "El conductor fue consultado exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
     public ResponseEntity<StandardResponse<ConductorDTO>>mostrarConductor(@PathVariable Long id){
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("conductor.get.successful"),
@@ -60,12 +60,11 @@ public class ConductorControlador {
     }
 
     @PostMapping("/save")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = ConductorDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "El conductor fue guardado exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = ConductorDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)},
+            description = "El conductor fue guardado exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
     public ResponseEntity<StandardResponse<ConductorDTO>>guardarConductor(@Valid @RequestBody ConductorDTO conductor){
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("conductor.save.successful"),
@@ -73,10 +72,9 @@ public class ConductorControlador {
     }
 
     @DeleteMapping("/delete/{id}")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "El conductor fue eliminado exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    @ApiResponse(responseCode = "200", description = "El conductor fue eliminado exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
     public ResponseEntity<StandardResponse<ConductorDTO>>deleteConductor(@PathVariable Long id){
         try {
             conductorFacade.delete(id);

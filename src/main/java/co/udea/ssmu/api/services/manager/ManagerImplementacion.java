@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class ManagerImplementacion{
 
+    private final ManagerRepositorio managerRepositorio;
+
     @Autowired
-    private ManagerRepositorio managerRepositorio;
+    public ManagerImplementacion(ManagerRepositorio managerRepositorio) {
+        this.managerRepositorio = managerRepositorio;
+    }
 
     //GET
     @Transactional(readOnly = true)

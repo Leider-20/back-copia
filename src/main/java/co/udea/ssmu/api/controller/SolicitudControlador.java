@@ -8,8 +8,8 @@ import co.udea.ssmu.api.utils.exception.DataBaseException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,31 +26,30 @@ public class SolicitudControlador {
     private static final String RESPONSE400 = "La petición es inválida";
     private static final String RESPONSE500 = "Error interno al procesar la respuesta";
 
+    @Autowired
     public SolicitudControlador(SolicitudFacade solicitudFacade, Messages messages) {
         this.solicitudFacade = solicitudFacade;
         this.messages = messages;
     }
 
     @GetMapping("/get-all")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "Las solicitudes fueron consultadas exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
-    public ResponseEntity<StandardResponse<List<SolicitudDTO>>> ListarSolicitud() {
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)},
+            description = "Las solicitudes fueron consultadas exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
+    public ResponseEntity<StandardResponse<List<SolicitudDTO>>> listarSolicitud() {
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("solicitud.get.all.successful"),
                 solicitudFacade.findAll()));
     }
 
     @GetMapping("/get/{id}")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = SolicitudDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "La solicitud fue consultada exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = SolicitudDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)},
+            description = "La solicitud fue consultada exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
     public ResponseEntity<StandardResponse<SolicitudDTO>>mostrarContacto(@PathVariable Long id){
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("solicitud.get.successful"),
@@ -58,12 +57,11 @@ public class SolicitudControlador {
     }
 
     @PostMapping("/save")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = SolicitudDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "La solicitud fue guardada exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = SolicitudDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)},
+            description = "La solicitud fue guardada exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
     public ResponseEntity<StandardResponse<SolicitudDTO>>guardarSolicitud(@Valid @RequestBody SolicitudDTO solicitud){
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
                 messages.get("solicitud.save.successful"),
@@ -71,10 +69,9 @@ public class SolicitudControlador {
     }
 
     @DeleteMapping("/delete/{id}")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "La solicitud fue eliminada exitosamente"),
-            @ApiResponse(responseCode = "400", description = RESPONSE400),
-            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    @ApiResponse(responseCode = "200", description = "La solicitud fue eliminada exitosamente")
+    @ApiResponse(responseCode = "400", description = RESPONSE400)
+    @ApiResponse(responseCode = "500", description = RESPONSE500)
     public ResponseEntity<StandardResponse<SolicitudDTO>>deleteSolicitud(@PathVariable Long id){
         try {
             solicitudFacade.delete(id);

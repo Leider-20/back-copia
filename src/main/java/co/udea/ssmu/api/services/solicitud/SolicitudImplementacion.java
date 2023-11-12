@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class SolicitudImplementacion{
 
+    private final SolicitudRepositorio solicitudRepositorio;
+
     @Autowired
-    private SolicitudRepositorio solicitudRepositorio;
+    public SolicitudImplementacion(SolicitudRepositorio solicitudRepositorio) {
+        this.solicitudRepositorio = solicitudRepositorio;
+    }
 
     //GET
     @Transactional(readOnly = true)

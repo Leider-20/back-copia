@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class InfoBancariaImplementacion{
 
+    private final InfoBancariaRepositorio infoBancariaRepositorio;
+
     @Autowired
-    private InfoBancariaRepositorio infoBancariaRepositorio;
+    public InfoBancariaImplementacion(InfoBancariaRepositorio infoBancariaRepositorio) {
+        this.infoBancariaRepositorio = infoBancariaRepositorio;
+    }
 
     //GET
     @Transactional(readOnly = true)

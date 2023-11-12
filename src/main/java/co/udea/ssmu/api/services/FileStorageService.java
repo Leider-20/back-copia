@@ -15,11 +15,13 @@ import static org.apache.http.entity.ContentType.*;
 @Service
 public class FileStorageService {
 
-    @Value("amazon.s3.bucket-name.one")
+    @Value("${amazon.s3.bucket-name.one}")
     private String bucketName;
 
-    @Value("amazon.s3.url.one")
+    @Value("${amazon.s3.url.one}")
     private String urlBucket;
+
+    private final static String pathformat = "%s/%s";
 
     private final FileStorageS3Util fileStorageS3Util;
 
@@ -42,7 +44,7 @@ public class FileStorageService {
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
         //Save PDF in S3 and then save in the database
-        String path = String.format("%s/%s", bucketName, conductorId);
+        String path = String.format(pathformat, bucketName, conductorId);
         try {
             fileStorageS3Util.upload(path, fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
@@ -68,7 +70,7 @@ public class FileStorageService {
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
         //Save PDF in S3 and then save in the database
-        String path = String.format("%s/%s", bucketName, conductorId);
+        String path = String.format(pathformat, bucketName, conductorId);
         try {
             fileStorageS3Util.upload(path,fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
@@ -80,7 +82,7 @@ public class FileStorageService {
     public void deleteFile(String fileName, Long conductorId) {
 
         //Save Image in S3 and then save in the database
-        String path = String.format("%s/%s", bucketName, conductorId);
+        String path = String.format(pathformat, bucketName, conductorId);
         fileStorageS3Util.delete(path, fileName);
 
 

@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class ConductorImplementacion{
 
-    @Autowired
     private ConductorRepositorio conductorRepositorio;
+
+    @Autowired
+    public ConductorImplementacion(ConductorRepositorio conductorRepositorio) {
+        this.conductorRepositorio = conductorRepositorio;
+    }
 
     @Transactional(readOnly = true)
     public List<Conductor> findAllConductor(){

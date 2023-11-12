@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class DocumentosImplementacion{
 
+    private final DocumentosRepositorio documentosRepositorio;
+
     @Autowired
-    private DocumentosRepositorio documentosRepositorio;
+    public DocumentosImplementacion(DocumentosRepositorio documentosRepositorio) {
+        this.documentosRepositorio = documentosRepositorio;
+    }
 
     //GET
     @Transactional(readOnly = true)

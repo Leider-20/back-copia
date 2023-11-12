@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class ContactoImplementacion{
 
-    @Autowired
     private ContactoRepositorio contactoRepositorio;
+
+    @Autowired
+    public ContactoImplementacion(ContactoRepositorio contactoRepositorio) {
+        this.contactoRepositorio = contactoRepositorio;
+    }
 
     //GET
     @Transactional(readOnly = true)
