@@ -10,27 +10,23 @@ import java.util.List;
 
 @Service
 @Transactional
-public class InfoBancariaImplementacion implements IInfoBancariaServicio {
+public class InfoBancariaImplementacion{
 
     @Autowired
     private InfoBancariaRepositorio infoBancariaRepositorio;
 
     //GET
-    @Override
     @Transactional(readOnly = true)
     public List<InfoBancaria> findAllInfoBancaria() {return infoBancariaRepositorio.findAll();}
 
     //POST
-    @Override
     public InfoBancaria saveInfoBancaria(InfoBancaria infoBancaria) {return infoBancariaRepositorio.save(infoBancaria);}
 
     //GET ID
-    @Override
     @Transactional(readOnly = true)
     public InfoBancaria findInfoBancaria(Long id) { return infoBancariaRepositorio.findById(id).orElse(null);}
 
     //DELETE
-    @Override
     public void deleteInfoBancaria(Long id) { infoBancariaRepositorio.deleteById(id);}
 
 }

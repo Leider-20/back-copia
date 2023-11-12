@@ -10,29 +10,25 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ConductorImplementacion implements IConductorServicio{
+public class ConductorImplementacion{
 
     @Autowired
     private ConductorRepositorio conductorRepositorio;
 
-    @Override
     @Transactional(readOnly = true)
     public List<Conductor> findAllConductor(){
         return conductorRepositorio.findAll();
     }
 
-    @Override
     public Conductor saveConductor(Conductor conductor){
         return conductorRepositorio.save(conductor);
     }
 
-    @Override
     @Transactional(readOnly = true)
     public Conductor getConductor(Long id){
         return conductorRepositorio.findById(id).orElse(null);
     }
 
-    @Override
     public void deleteConductor(Long id){
         conductorRepositorio.deleteById(id);
     }

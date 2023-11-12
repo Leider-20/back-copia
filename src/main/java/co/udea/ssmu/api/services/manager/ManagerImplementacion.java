@@ -10,26 +10,22 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ManagerImplementacion implements  IManagerServicio{
+public class ManagerImplementacion{
 
     @Autowired
     private ManagerRepositorio managerRepositorio;
 
     //GET
-    @Override
     @Transactional(readOnly = true)
     public List<Manager> findAllManager() { return managerRepositorio.findAll();}
 
     //POST
-    @Override
     public Manager saveManager(Manager manager) {return managerRepositorio.save(manager);}
 
     //GET ID
-    @Override
     @Transactional(readOnly = true)
     public Manager findManager (Long id) {return managerRepositorio.findById(id).orElse(null);}
 
-    @Override
     public void deleteManager (Long id) {managerRepositorio.deleteById(id);}
 
 }

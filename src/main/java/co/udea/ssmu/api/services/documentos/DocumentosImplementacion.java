@@ -10,27 +10,23 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DocumentosImplementacion implements IDocumentosServicio{
+public class DocumentosImplementacion{
 
     @Autowired
     private DocumentosRepositorio documentosRepositorio;
 
     //GET
-    @Override
     @Transactional(readOnly = true)
     public List<Documentos> findAllDocumentos() { return documentosRepositorio.findAll();}
 
     //POST
-    @Override
     public Documentos saveDocumento(Documentos documentos) {return documentosRepositorio.save(documentos);}
 
     //GET ID
-    @Override
     @Transactional(readOnly = true)
     public Documentos findDocumento(Long id) {return documentosRepositorio.findById(id).orElse(null);}
 
     //DELETE
-    @Override
     public void deleteDocumento(Long id) {documentosRepositorio.deleteById(id);}
 
 }

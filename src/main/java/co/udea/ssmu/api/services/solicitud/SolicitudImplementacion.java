@@ -10,26 +10,22 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SolicitudImplementacion implements ISolicitudServicio{
+public class SolicitudImplementacion{
 
     @Autowired
     private SolicitudRepositorio solicitudRepositorio;
 
     //GET
-    @Override
     @Transactional(readOnly = true)
     public List<Solicitud> findAllSolicitud() {return solicitudRepositorio.findAll();}
 
     //POST
-    @Override
     public Solicitud saveSolicitud(Solicitud solicitud) {return  solicitudRepositorio.save(solicitud);}
 
     //GET ID
-    @Override
     @Transactional(readOnly = true)
     public Solicitud findSolicitud(Long id) {return solicitudRepositorio.findById(id).orElse(null);}
 
     //DELETE
-    @Override
     public void deleteSolicitud(Long id) { solicitudRepositorio.deleteById(id);}
 }
