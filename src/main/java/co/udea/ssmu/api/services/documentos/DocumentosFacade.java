@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.apache.http.entity.ContentType.*;
 
@@ -46,17 +47,12 @@ public class DocumentosFacade {
     public List<String> saveS3Documents(Long conductorId, List<MultipartFile> files){
         List<String> urls = new ArrayList<>();
         for (MultipartFile file:files) {
-            try{
-                if (file.getContentType().equals(ContentType.PDF.toString())){
+            if (Objects.equals(file.getContentType(), ContentType.PDF.toString())){
                     urls.add(fileStorageService.createFilePdf(file,conductorId, file.getName()));
-                }else if (Arrays.asList(IMAGE_JPEG.getMimeType(),
+            }else if (Arrays.asList(IMAGE_JPEG.getMimeType(),
                         IMAGE_PNG.getMimeType(),
                         IMAGE_BMP.getMimeType()).contains(file.getContentType())){
                     urls.add(fileStorageService.createFileImage(file,conductorId, file.getName()));
-                }
-            }
-            catch(Exception e){
-                e.printStackTrace();
             }
         }
         return urls;
