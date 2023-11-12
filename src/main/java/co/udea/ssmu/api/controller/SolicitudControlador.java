@@ -1,7 +1,5 @@
 package co.udea.ssmu.api.controller;
 
-import co.udea.ssmu.api.model.jpa.dto.ConductorDTO;
-import co.udea.ssmu.api.services.conductor.ConductorFacade;
 import co.udea.ssmu.api.services.solicitud.SolicitudFacade;
 import co.udea.ssmu.api.model.jpa.dto.SolicitudDTO;
 import co.udea.ssmu.api.utils.common.Messages;
@@ -12,19 +10,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/solicitud")
