@@ -27,7 +27,7 @@ public class FileStorageService {
         this.fileStorageS3Util = fileStorageS3Util;
     }
 
-    public String createFilePdf(MultipartFile file, Long ConductorId, String fileName) {
+    public String createFilePdf(MultipartFile file, Long conductorId, String fileName) {
         //check if the file is empty
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
@@ -42,13 +42,13 @@ public class FileStorageService {
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
         //Save PDF in S3 and then save in the database
-        String path = String.format("%s/%s", bucketName);
+        String path = String.format("%s/%s", bucketName, conductorId);
         try {
             fileStorageS3Util.upload(path, fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
-        return (urlBucket.concat(String.valueOf(ConductorId)).concat("/").concat(fileName));
+        return (path.concat("/").concat(fileName));
     }
 
     public String createFileImage(MultipartFile file, Long conductorId, String fileName) {
@@ -68,13 +68,13 @@ public class FileStorageService {
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
         //Save PDF in S3 and then save in the database
-        String path = String.format("%s/%s", bucketName);
+        String path = String.format("%s/%s", bucketName, conductorId);
         try {
             fileStorageS3Util.upload(path,fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
-        return (urlBucket.concat(String.valueOf(conductorId)).concat("/").concat(fileName));
+        return (path.concat("/").concat(fileName));
     }
 
     public void deleteFile(String fileName, Long conductorId) {

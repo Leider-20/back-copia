@@ -46,7 +46,7 @@ public class DocumentosFacade {
     public List<String> saveS3Documents(Long conductorId, List<MultipartFile> files){
         List<String> urls = new ArrayList<>();
         for (MultipartFile file:files) {
-            if (file.getContentType() == ContentType.PDF.toString()){
+            if (file.getContentType().equals(ContentType.PDF.toString())){
                 urls.add(fileStorageService.createFilePdf(file,conductorId, file.getName()));
             }
             if (Arrays.asList(IMAGE_JPEG.getMimeType(),
