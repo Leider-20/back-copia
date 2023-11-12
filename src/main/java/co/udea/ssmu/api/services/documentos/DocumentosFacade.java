@@ -46,13 +46,17 @@ public class DocumentosFacade {
     public List<String> saveS3Documents(Long conductorId, List<MultipartFile> files){
         List<String> urls = new ArrayList<>();
         for (MultipartFile file:files) {
-            if (file.getContentType().equals(ContentType.PDF.toString())){
-                urls.add(fileStorageService.createFilePdf(file,conductorId, file.getName()));
+            try{
+                if (file.getContentType().equals(ContentType.PDF.toString())){
+                    urls.add(fileStorageService.createFilePdf(file,conductorId, file.getName()));
+                }else if (Arrays.asList(IMAGE_JPEG.getMimeType(),
+                        IMAGE_PNG.getMimeType(),
+                        IMAGE_BMP.getMimeType()).contains(file.getContentType())){
+                    urls.add(fileStorageService.createFileImage(file,conductorId, file.getName()));
+                }
             }
-            if (Arrays.asList(IMAGE_JPEG.getMimeType(),
-                    IMAGE_PNG.getMimeType(),
-                    IMAGE_BMP.getMimeType()).contains(file.getContentType())){
-                urls.add(fileStorageService.createFileImage(file,conductorId, file.getName()));
+            catch(Exception e){
+                e.printStackTrace();
             }
         }
         return urls;
