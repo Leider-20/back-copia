@@ -2,14 +2,17 @@ package co.udea.ssmu.api.controller;
 
 import co.udea.ssmu.api.services.documentos.DocumentosFacade;
 import co.udea.ssmu.api.model.jpa.dto.DocumentosDTO;
+import co.udea.ssmu.api.utils.common.Messages;
+import co.udea.ssmu.api.utils.common.StandardResponse;
+import co.udea.ssmu.api.utils.exception.DataBaseException;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,65 +25,67 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/documentos")
 public class DocumentosControlador {
 
-    @Autowired
-    private DocumentosFacade documentosFacade;
+    private final DocumentosFacade documentosFacade;
+    private final Messages messages;
+
+    private static final String RESPONSE400 = "La petición es inválida";
+    private static final String RESPONSE500 = "Error interno al procesar la respuesta";
+
+    public DocumentosControlador(DocumentosFacade documentosFacade, Messages messages) {
+        this.documentosFacade = documentosFacade;
+        this.messages = messages;
+    }
 
     @GetMapping("/get-all")
-    public ResponseEntity<?> ListarDocumentos() {return ResponseEntity.ok(this.documentosFacade.findAll());}
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "Los documentos fueron consultados exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<List<DocumentosDTO>>> ListarDocumentos() {
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("documentos.get.all.successful"),
+                documentosFacade.findAll()));
+    }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<?>mostrarDocumento(@PathVariable Long id){
-        DocumentosDTO documentos = null; //Mensaje de exito o error
-        Map<String, Object> response = new HashMap<>();
-
-        try{
-            documentos = this.documentosFacade.get(id);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al consultar");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        if (documentos == null){
-            response.put("mensaje", "El documento identificado con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(documentos, HttpStatus.OK);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = DocumentosDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "Los documentos del conductor fueron consultados exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<DocumentosDTO>>mostrarDocumento(@PathVariable Long id){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("documentos.get.successful"),
+                documentosFacade.get(id)));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?>guardarDocumento(@Valid @RequestBody DocumentosDTO documentos, @RequestPart List<MultipartFile> files, BindingResult result){
-        DocumentosDTO documentosNuevo = null;
-        Map<String, Object> response = new HashMap<>();
-
-        if(result.hasErrors()){
-            List<String> errors = result.getFieldErrors()
-                    .stream()
-                    .map(err -> "El campo '"+ err.getField() + "' "+ err.getDefaultMessage())
-                    .collect(Collectors.toList());
-            response.put("errors", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-        try {
-            documentosNuevo = this.documentosFacade.save(documentos, files);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al introducir un nuevo documento a la base de datos");
-        }
-        response.put("mensaje", "El documento se ha REGISTRADO con exito");
-        response.put("documento", documentosNuevo);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = DocumentosDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "Los documentos fueron guardados exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<DocumentosDTO>>guardarDocumento(@Valid @RequestBody DocumentosDTO documentos, @RequestPart List<MultipartFile> files){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("documentos.save.successful"),
+                documentosFacade.save(documentos,files)));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?>deleteDocumentos(@PathVariable Long id){
-        Map<String, Object> response = new HashMap<>();
-
-        try{
-            this.documentosFacade.delete(id);
-        } catch (DataAccessException e) {
-            response.put("mensaje", "Error al consultar");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Los documentos del conductor fueron eliminados exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<DocumentosDTO>>deleteDocumentos(@PathVariable Long id){
+        try {
+            documentosFacade.delete(id);
+            return ResponseEntity.ok(new StandardResponse<>(messages.get("documentos.delete.successful"), StandardResponse.StatusStandardResponse.OK));
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException(messages.get("documentos.delete.error"));
         }
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

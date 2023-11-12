@@ -2,85 +2,87 @@ package co.udea.ssmu.api.controller;
 
 import co.udea.ssmu.api.services.infoBancaria.InfoBancariaFacade;
 import co.udea.ssmu.api.model.jpa.dto.InfoBancariaDTO;
+import co.udea.ssmu.api.utils.common.Messages;
+import co.udea.ssmu.api.utils.common.StandardResponse;
+import co.udea.ssmu.api.utils.exception.DataBaseException;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/infobancaria")
 public class InfoBancariaControlador {
 
-    @Autowired
-    private InfoBancariaFacade infoBancariaFacade;
+    private final InfoBancariaFacade infoBancariaFacade;
+    private final Messages messages;
+
+    private static final String RESPONSE400 = "La petición es inválida";
+    private static final String RESPONSE500 = "Error interno al procesar la respuesta";
+
+    public InfoBancariaControlador(InfoBancariaFacade infoBancariaFacade, Messages messages) {
+        this.infoBancariaFacade = infoBancariaFacade;
+        this.messages = messages;
+    }
 
     @GetMapping("/get-all")
-    public ResponseEntity<?> ListarInfoBancaria() {return ResponseEntity.ok(this.infoBancariaFacade.findAll());}
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "Las Informaciones Bancarias fueron consultadas exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<List<InfoBancariaDTO>>> ListarInfoBancaria() {
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("infoBancaria.get.all.successful"),
+                infoBancariaFacade.findAll()));
+    }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<?>mostrarInfoBancaria(@PathVariable Long id){
-        InfoBancariaDTO infoBancaria = null; //Mensaje de exito o error
-        Map<String, Object> response = new HashMap<>();
-
-        try{
-            infoBancaria = this.infoBancariaFacade.get(id);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al consultar");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        if (infoBancaria == null){
-            response.put("mensaje", "La información bancaria identificada con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(infoBancaria, HttpStatus.OK);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = InfoBancariaDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "La informacion bancaria fue consultada exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<InfoBancariaDTO>>mostrarInfoBancaria(@PathVariable Long id){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("infoBancaria.get.successful"),
+                infoBancariaFacade.get(id)));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?>guardarInfoBancaria(@Valid @RequestBody InfoBancariaDTO infoBancaria, BindingResult result){
-        InfoBancariaDTO infoBancariaNueva = null;
-        Map<String, Object> response = new HashMap<>();
-
-        if(result.hasErrors()){
-            List<String> errors = result.getFieldErrors()
-                    .stream()
-                    .map(err -> "El campo '"+ err.getField() + "' "+ err.getDefaultMessage())
-                    .collect(Collectors.toList());
-            response.put("errors", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-        try {
-            infoBancariaNueva = this.infoBancariaFacade.save(infoBancaria);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al introducir una nueva información bancaria a la base de datos");
-        }
-        response.put("mensaje", "La información bancaria se ha REGISTRADO con exito");
-        response.put("Informacion bancaria", infoBancariaNueva);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = InfoBancariaDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "La informacion bancaria fue guardada exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<InfoBancariaDTO>>guardarInfoBancaria(@Valid @RequestBody InfoBancariaDTO infoBancaria){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("infoBancaria.save.successful"),
+                infoBancariaFacade.save(infoBancaria)));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?>deleteInfoBancaria(@PathVariable Long id){
-        Map<String, Object> response = new HashMap<>();
-
-        try{
-            this.infoBancariaFacade.delete(id);
-        } catch (DataAccessException e) {
-            response.put("mensaje", "Error al consultar");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "La informacion bancaria fue eliminada exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<InfoBancariaDTO>>deleteInfoBancaria(@PathVariable Long id){
+        try {
+            infoBancariaFacade.delete(id);
+            return ResponseEntity.ok(new StandardResponse<>(messages.get("infoBancaria.delete.successful"), StandardResponse.StatusStandardResponse.OK));
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException(messages.get("infoBancaria.delete.error"));
         }
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }

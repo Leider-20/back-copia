@@ -2,89 +2,87 @@ package co.udea.ssmu.api.controller;
 
 import co.udea.ssmu.api.services.conductor.ConductorFacade;
 import co.udea.ssmu.api.model.jpa.dto.ConductorDTO;
+import co.udea.ssmu.api.utils.common.Messages;
+import co.udea.ssmu.api.utils.common.StandardResponse;
+import co.udea.ssmu.api.utils.exception.DataBaseException;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/conductores")
 public class ConductorControlador {
-    @Autowired
-    private ConductorFacade conductorFacade;
+
+    private final ConductorFacade conductorFacade;
+    private final Messages messages;
+
+    private static final String RESPONSE400 = "La petición es inválida";
+    private static final String RESPONSE500 = "Error interno al procesar la respuesta";
+    public ConductorControlador(ConductorFacade conductorFacade, Messages messages) {
+        this.conductorFacade = conductorFacade;
+        this.messages = messages;
+    }
 
     //Buscar todos los conductores
     @GetMapping("/get-all")
-    public ResponseEntity<?>ListarConductor(){
-        return ResponseEntity.ok(this.conductorFacade.findAll());
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = List.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "Los conductores fueron consultados exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<List<ConductorDTO>>>ListarConductor(){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("conductor.get.all.successful"),
+                conductorFacade.findAll()));
     }
 
     //Buscar conductor por ID
     @GetMapping("/get/{id}")
-    public ResponseEntity<?>mostrarConductor(@PathVariable Long id){
-        ConductorDTO conductor = null;
-        //Mensaje de exito o error
-        Map<String, Object> response = new HashMap<>();
-
-        try{
-            conductor = this.conductorFacade.get(id);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al consultar");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        if (conductor == null){
-           response.put("mensaje", "El conductor identificado con el ID: ".concat(id.toString()).concat(" No existe en la base de datos"));
-           return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(conductor, HttpStatus.OK);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ConductorDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "El conductor fue consultado exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<ConductorDTO>>mostrarConductor(@PathVariable Long id){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("conductor.get.successful"),
+                conductorFacade.get(id)));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?>guardarConductor(@Valid @RequestBody ConductorDTO conductor, BindingResult result){
-        ConductorDTO conductorNuevo = null;
-        Map<String, Object> response = new HashMap<>();
-
-        if(result.hasErrors()){
-            List<String> errors = result.getFieldErrors()
-                    .stream()
-                    .map(err -> "El campo '"+ err.getField() + "' "+ err.getDefaultMessage())
-                    .collect(Collectors.toList());
-            response.put("errors", errors);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-        try {
-            conductorNuevo = this.conductorFacade.save(conductor);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al introducir un nuevo conductor a la base de datos");
-        }
-        response.put("mensaje", "El conductor se ha REGISTRADO con exito");
-        response.put("conductor", conductorNuevo);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ConductorDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+            }, description = "El conductor fue guardado exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<ConductorDTO>>guardarConductor(@Valid @RequestBody ConductorDTO conductor){
+        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
+                messages.get("conductor.save.successful"),
+                conductorFacade.save(conductor)));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?>deleteConductor(@PathVariable Long id){
-        //Mensaje de exito o error
-        Map<String, Object> response = new HashMap<>();
-
-        try{
-            this.conductorFacade.delete(id);
-        } catch (DataAccessException e) {
-            response.put("mensaje", "Error al consultar");
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "El conductor fue eliminado exitosamente"),
+            @ApiResponse(responseCode = "400", description = RESPONSE400),
+            @ApiResponse(responseCode = "500", description = RESPONSE500)})
+    public ResponseEntity<StandardResponse<ConductorDTO>>deleteConductor(@PathVariable Long id){
+        try {
+            conductorFacade.delete(id);
+            return ResponseEntity.ok(new StandardResponse<>(messages.get("conductor.delete.successful"), StandardResponse.StatusStandardResponse.OK));
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException(messages.get("conductor.delete.error"));
         }
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
