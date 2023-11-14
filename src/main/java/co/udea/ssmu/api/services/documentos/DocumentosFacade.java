@@ -3,7 +3,7 @@ package co.udea.ssmu.api.services.documentos;
 import co.udea.ssmu.api.model.jpa.dto.DocumentosDTO;
 import co.udea.ssmu.api.model.jpa.mapper.DocumentosMapper;
 import co.udea.ssmu.api.services.FileStorageService;
-import com.amazonaws.services.kendra.model.ContentType;
+import org.apache.http.entity.ContentType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class DocumentosFacade {
     public List<String> saveS3Documents(Long conductorId, List<MultipartFile> files){
         List<String> urls = new ArrayList<>();
         for (MultipartFile file:files) {
-            if (Objects.equals(file.getContentType(), ContentType.PDF.toString())){
+            if (Objects.equals(file.getContentType(), ContentType.getByMimeType("application/pdf").toString())){
                     urls.add(fileStorageService.createFilePdf(file,conductorId, file.getName()));
             }else if (Arrays.asList(IMAGE_JPEG.getMimeType(),
                         IMAGE_PNG.getMimeType(),

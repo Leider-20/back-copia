@@ -1,16 +1,13 @@
 package co.udea.ssmu.api.services;
 
-import co.udea.ssmu.api.model.jpa.model.Documentos;
 import co.udea.ssmu.api.utils.common.FileStorageS3Util;
-import com.amazonaws.services.kendra.model.ContentType;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-
-import static org.apache.http.entity.ContentType.*;
 
 @Service
 public class FileStorageService {
@@ -35,7 +32,7 @@ public class FileStorageService {
             throw new IllegalStateException("Cannot upload empty file");
         }
         //Check if the file is a PDF
-        if (!Arrays.asList(ContentType.PDF.toString()).contains(file.getContentType())) {
+        if (!Arrays.asList(ContentType.getByMimeType("application/pdf").toString()).contains(file.getContentType())) {
             throw new IllegalStateException("File uploaded is not a PDF");
         }
         //get file metadata
@@ -59,9 +56,9 @@ public class FileStorageService {
             throw new IllegalStateException("Cannot upload empty file");
         }
         //Check if the file is a PDF
-        if (!Arrays.asList(IMAGE_JPEG.getMimeType(),
-                IMAGE_PNG.getMimeType(),
-                IMAGE_BMP.getMimeType()).contains(file.getContentType())) {
+        if (!Arrays.asList(ContentType.IMAGE_JPEG.getMimeType(),
+                ContentType.IMAGE_PNG.getMimeType(),
+                ContentType.IMAGE_BMP.getMimeType()).contains(file.getContentType())) {
             throw new IllegalStateException("File uploaded is not an IMAGE");
         }
         //get file metadata
