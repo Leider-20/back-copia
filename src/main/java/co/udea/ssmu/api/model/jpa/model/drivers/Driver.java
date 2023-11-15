@@ -24,12 +24,19 @@ public class Driver {
     @Column(name = "surnames")
     private String surnames;
 
+    @Column(name = "service_number")
+    private Integer service_number;
+
     @NotNull
     @Column(name = "email")
     private String email;
 
     @Column(name = "age")
     private String age;
+
+    @NotNull
+    @Column(name = "phone")
+    private String phone;
 
     @NotNull
     @Column(name = "document_type")
@@ -49,6 +56,22 @@ public class Driver {
 
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     private Vehicle vehicle;
+
+    public Integer getService_number() {
+        return service_number;
+    }
+
+    public void setService_number(Integer service_number) {
+        this.service_number = service_number;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Integer getId() {
         return id;
@@ -129,4 +152,5 @@ public class Driver {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
+
 }

@@ -17,8 +17,6 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-#    url: jdbc:postgresql://localhost:5432/ssmu-dev?serverTimezone=America/Bogota
-#    url: jdbc:postgresql://localhost:5432/postgres
     url: jdbc:postgresql://db.jsynrsfujilozitwtmjc.supabase.co:5432/postgres
     username: postgres
     password: postgres123+
@@ -37,4 +35,4 @@ ssmu-api:
 logging:
   level:
     root: info
-    org.springframework: DEBUG
+    org.springframework: info

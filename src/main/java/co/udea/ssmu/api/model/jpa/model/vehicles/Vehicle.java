@@ -51,9 +51,6 @@ public class Vehicle {
     @JoinColumn(name = "fk_driver", insertable = false, updatable = false)
     private Driver driver;
 
-    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
-    private List<Trip> trips;
-
     public Integer getId() {
         return id;
     }
@@ -132,13 +129,5 @@ public class Vehicle {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
-    }
-
-    public List<Trip> getTrips() {
-        return trips;
-    }
-
-    public void setTrips(List<Trip> trips) {
-        this.trips = trips;
     }
 }
