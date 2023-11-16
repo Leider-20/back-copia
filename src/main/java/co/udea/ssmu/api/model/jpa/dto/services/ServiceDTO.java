@@ -1,62 +1,36 @@
 package co.udea.ssmu.api.model.jpa.dto.services;
 
+import co.udea.ssmu.api.model.jpa.dto.drivers.DriverDTO;
+import co.udea.ssmu.api.model.jpa.dto.paymentMethod.PaymentMethodDTO;
+import co.udea.ssmu.api.model.jpa.dto.serviceType.ServiceTypeDTO;
+import co.udea.ssmu.api.model.jpa.dto.users.UsersDTO;
 import co.udea.ssmu.api.model.jpa.model.drivers.Driver;
+import co.udea.ssmu.api.model.jpa.model.paymentMethod.PaymentMethod;
+import co.udea.ssmu.api.model.jpa.model.serviceType.ServiceType;
+import co.udea.ssmu.api.model.jpa.model.users.User;
 import jakarta.persistence.Column;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class ServiceDTO {
-    private Integer idService;
-    private Integer idUsurious;
-    private Integer idConductor;
-    //private Usuario usuario;
-    private Driver conductor;
+    private Integer id;
+    private UsersDTO user;
+    private DriverDTO driver;
     private Integer ubicacionOrigen;
     private Integer ubicacionDestino;
     private LocalDateTime fecha;
-    //private TipoServicio tipoServicio;
+    private ServiceTypeDTO serviceType;
     private String estado;
     private String detalles;
     private String estadoPago;
     private String calificacionConductor;
     private String calificacionUsuario;
     private String motivo;
-    //private MetodoPago metodoPago;
+    private PaymentMethodDTO paymentMethod;
     //private Tarifa tarifa;
     private Double costo;
 
-    public Integer getIdService() {
-        return idService;
-    }
-
-    public void setIdService(Integer idService) {
-        this.idService = idService;
-    }
-
-    public Integer getIdUsurious() {
-        return idUsurious;
-    }
-
-    public void setIdUsurious(Integer idUsurious) {
-        this.idUsurious = idUsurious;
-    }
-
-    public Integer getIdConductor() {
-        return idConductor;
-    }
-
-    public void setIdConductor(Integer idConductor) {
-        this.idConductor = idConductor;
-    }
-
-    public Driver getConductor() {
-        return conductor;
-    }
-
-    public void setConductor(Driver conductor) {
-        this.conductor = conductor;
-    }
 
     public Integer getUbicacionOrigen() {
         return ubicacionOrigen;
@@ -136,5 +110,45 @@ public class ServiceDTO {
 
     public void setCosto(Double costo) {
         this.costo = costo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public UsersDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UsersDTO user) {
+        this.user = user;
+    }
+
+    public DriverDTO getDriver() {
+        return driver;
+    }
+
+    public void setDriver(DriverDTO driver) {
+        this.driver = driver;
+    }
+
+    public ServiceTypeDTO getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(ServiceTypeDTO serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public PaymentMethodDTO getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethodDTO paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }

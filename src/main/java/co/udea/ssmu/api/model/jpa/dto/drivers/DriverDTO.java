@@ -10,8 +10,10 @@ public class DriverDTO {
     private Integer id;
     private String names;
     private String surnames;
+    private Integer service_number;
     private String email;
     private String age;
+    private String phone;
     private Integer documentType;
     private String document;
     private LocalDateTime admissionDate;
@@ -96,5 +98,21 @@ public class DriverDTO {
 
     public void setVehicle(VehicleDTO vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public Integer getService_number() {
+        return service_number;
+    }
+
+    public void setService_number(Integer service_number) {
+        this.service_number = service_number;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
