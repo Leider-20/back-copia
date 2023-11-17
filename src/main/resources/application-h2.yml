@@ -1,30 +1,31 @@
 spring:
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        order_inserts: true
-        dialect: org.hibernate.dialect.Oracle12cDialect
-        enhancer:
-          enable: false
-        jdbc:
-          batch_size: 50
-          lob:
-            non_contextual_creation: true
-        temp:
-          use_jdbc_metadata_defaults: false
+        dialect: org.hibernate.dialect.H2Dialect
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@localhost:1521/xepdb1
-    username: ssmu_dev
-    password: password
-    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    initialize: true
+    initialization-mode: always
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
 
   messages:
     basename: bundles/apiLanguageBundle
@@ -42,7 +43,6 @@ springdoc:
     path: /v3/api-docs # Ruta de acceso para los documentos OpenAPI
   show-actuator: true # Habilitar la visualización de los endpoints de actuator
   version: 3.0.0 # Versión de OpenAPI
-
 
 logging:
   level:
