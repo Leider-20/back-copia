@@ -2,9 +2,11 @@ package co.udea.ssmu.api.services.infoBancaria;
 
 import co.udea.ssmu.api.model.jpa.dto.InfoBancariaDTO;
 import co.udea.ssmu.api.model.jpa.mapper.InfoBancariaMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class InfoBancariaFacade {
     private final InfoBancariaImplementacion infoBancariaImplementacion;
     private final InfoBancariaMapper infoBancariaMapper;

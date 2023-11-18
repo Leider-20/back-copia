@@ -4,6 +4,7 @@ import co.udea.ssmu.api.model.jpa.dto.DocumentosDTO;
 import co.udea.ssmu.api.model.jpa.mapper.DocumentosMapper;
 import co.udea.ssmu.api.services.FileStorageService;
 import org.apache.http.entity.ContentType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 import static org.apache.http.entity.ContentType.*;
 
+@Service
 public class DocumentosFacade {
     private final DocumentosImplementacion documentosImplementacion;
     private final DocumentosMapper documentosMapper;

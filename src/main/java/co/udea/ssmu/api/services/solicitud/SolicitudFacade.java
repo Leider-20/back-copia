@@ -2,9 +2,11 @@ package co.udea.ssmu.api.services.solicitud;
 
 import co.udea.ssmu.api.model.jpa.dto.SolicitudDTO;
 import co.udea.ssmu.api.model.jpa.mapper.SolicitudMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SolicitudFacade {
     private final SolicitudImplementacion solicitudImplementacion;
     private final SolicitudMapper solicitudMapper;

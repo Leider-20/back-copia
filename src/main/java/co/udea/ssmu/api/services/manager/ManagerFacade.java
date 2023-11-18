@@ -2,9 +2,11 @@ package co.udea.ssmu.api.services.manager;
 
 import co.udea.ssmu.api.model.jpa.dto.ManagerDTO;
 import co.udea.ssmu.api.model.jpa.mapper.ManagerMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ManagerFacade {
     private final ManagerImplementacion managerImplementacion;
     private final ManagerMapper managerMapper;

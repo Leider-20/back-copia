@@ -2,9 +2,11 @@ package co.udea.ssmu.api.services.contacto;
 
 import co.udea.ssmu.api.model.jpa.dto.ContactoDTO;
 import co.udea.ssmu.api.model.jpa.mapper.ContactoMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ContactoFacade {
     private final ContactoImplementacion contactoImplementacion;
     private final ContactoMapper contactoMapper;

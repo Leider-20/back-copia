@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class FileStorageS3Util {
+
     private final AmazonS3 amazonS3;
 
     public void upload(String path,
