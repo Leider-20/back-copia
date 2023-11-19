@@ -1,5 +1,7 @@
 package co.udea.ssmu.api.model.jpa.mapper;
 
+import org.mapstruct.Mapper;
+
 import java.util.List;
 import java.util.Set;
 

@@ -2,6 +2,7 @@ package co.udea.ssmu.api.services.conductor;
 
 import co.udea.ssmu.api.model.jpa.dto.ConductorDTO;
 import co.udea.ssmu.api.model.jpa.mapper.ConductorMapper;
+import co.udea.ssmu.api.model.jpa.model.Conductor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 @Transactional
 public class ConductorFacade {
+
     private final ConductorImplementacion conductorImplementacion;
     private final ConductorMapper conductorMapper;
 
