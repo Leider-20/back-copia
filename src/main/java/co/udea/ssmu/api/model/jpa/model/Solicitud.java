@@ -2,9 +2,15 @@ package co.udea.ssmu.api.model.jpa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 public class Solicitud {
@@ -37,60 +43,4 @@ public class Solicitud {
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_Confirmacion")
     private Date fechaConfirmacion;
-
-    public Long getSolicitudId() {
-        return solicitudId;
-    }
-
-    public void setSolicitudId(Long solicitudId) {
-        this.solicitudId = solicitudId;
-    }
-
-    public Conductor getConductor() {
-        return conductor;
-    }
-
-    public void setConductor(Conductor conductor) {
-        this.conductor = conductor;
-    }
-
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getEstadoSolicitud() {
-        return estadoSolicitud;
-    }
-
-    public void setEstadoSolicitud(String estadoSolicitud) {
-        this.estadoSolicitud = estadoSolicitud;
-    }
-
-    public Date getFechaEnvio() {
-        return fechaEnvio;
-    }
-
-    public void setFechaEnvio(Date fechaEnvio) {
-        this.fechaEnvio = fechaEnvio;
-    }
-
-    public Date getFechaConfirmacion() {
-        return fechaConfirmacion;
-    }
-
-    public void setFechaConfirmacion(Date fechaConfirmacion) {
-        this.fechaConfirmacion = fechaConfirmacion;
-    }
 }
