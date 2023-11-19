@@ -43,7 +43,7 @@ public class DriverFacade {
     }
 
     public DriverDTO update(DriverDTO Driver) {
-        return driverMapper.toDto(driverService.save(driverMapper.toEntity(Driver)));
+        return driverMapper.toDto(driverService.update(driverMapper.toEntity(Driver)));
     }
 
     public void delete(Integer id) {

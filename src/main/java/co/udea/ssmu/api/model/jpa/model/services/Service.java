@@ -44,6 +44,7 @@ public class Service {
     @NotNull
     @Column(name = "estado")
     private String estado;
+
     @NotNull
     @Column(name = "detalles")
     private String detalles;
@@ -51,12 +52,18 @@ public class Service {
     @NotNull
     @Column(name = "estadoPago")
     private String estadoPago;
+
     @NotNull
-    @Column(name = "calificacionConductor")
-    private String calificacionConductor;
+    @Column(name = "calificacionServicio")
+    private String calificacionServicio;
+
     @NotNull
     @Column(name = "calificacionUsuario")
     private String calificacionUsuario;
+
+    @NotNull
+    @Column(name = "calificacionConductor")
+    private String calificacionConductor;
 
     @NotNull
     @Column(name = "motivo")

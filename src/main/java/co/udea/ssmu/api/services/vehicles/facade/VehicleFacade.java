@@ -38,7 +38,7 @@ public class VehicleFacade {
     }
 
     public VehicleDTO update(VehicleDTO vehicle) {
-        return vehicleMapper.toDto(vehicleService.save(vehicleMapper.toEntity(vehicle)));
+        return vehicleMapper.toDto(vehicleService.update(vehicleMapper.toEntity(vehicle)));
     }
 
     public void delete(Integer id) {

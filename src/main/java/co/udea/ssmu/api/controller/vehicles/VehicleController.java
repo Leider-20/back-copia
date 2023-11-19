@@ -66,31 +66,6 @@ public class VehicleController {
                 vehicleFacade.findByAll()));
     }
 
-    @GetMapping("/get-all/filter")
-    @Operation(summary = "Consultar los vehículos paginado")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Los vehículos fueron consultados exitosamente",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Page.class)))),
-            @ApiResponse(responseCode = "400", description = "La petición es inválida"),
-            @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")
-    })
-    public ResponseEntity<StandardResponse<Page<VehicleDTO>>> getWithPage(
-            @Parameter(description = "Página para la cual se desean recibir los resultados (0..N)")
-            @RequestParam(defaultValue = "0") Integer page,
-            @Parameter(description = "Número de registros por página.")
-            @RequestParam(defaultValue = "10") Integer size,
-            @Parameter(description = "Criterio de ordenamiento en el formato: campo(,asc|desc). "
-                    + "por defecto el ordenamiento es asc. "
-                    + "Se permite múltiple criterio de ordenamiento.")
-            @RequestParam(defaultValue = "id,asc") String sort) {
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.asc(sort.split(",")[0])));
-
-        return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
-                messages.get("vehicle.get.all.filter.successful"),
-                vehicleFacade.getWithPage(pageable)));
-    }
-
     @PutMapping("/update")
     @Operation(summary = "Permite actualizar un vehículo")
     @ApiResponses({
