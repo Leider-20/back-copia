@@ -81,6 +81,14 @@ public class Service {
     @Column(name = "costo")
     private Double costo;
 
+    @NotNull
+    @Column(name = "ability")
+    private String ability;
+
+    @NotNull
+    @Column(name = "allowsPets")
+    private Boolean allowsPets;
+
     public Integer getId() {
         return id;
     }
@@ -215,5 +223,21 @@ public class Service {
 
     public void setCosto(Double costo) {
         this.costo = costo;
+    }
+
+    public String getAbility() {
+        return ability;
+    }
+
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+
+    public Boolean getAllowsPets() {
+        return allowsPets;
+    }
+
+    public void setAllowsPets(Boolean allowsPets) {
+        this.allowsPets = allowsPets;
     }
 }

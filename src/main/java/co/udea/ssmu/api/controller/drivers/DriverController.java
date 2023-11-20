@@ -1,5 +1,6 @@
 package co.udea.ssmu.api.controller.drivers;
 
+import co.udea.ssmu.api.model.jpa.dto.services.ServiceDTO;
 import co.udea.ssmu.api.utils.common.Messages;
 import co.udea.ssmu.api.utils.common.StandardResponse;
 import co.udea.ssmu.api.model.jpa.dto.drivers.DriverDTO;
@@ -31,6 +32,7 @@ import java.util.List;
 public class DriverController {
 
     private final DriverFacade driverFacade;
+
     private final Messages messages;
 
     public DriverController(DriverFacade driverFacade, Messages messages) {
@@ -71,7 +73,7 @@ public class DriverController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = DriverDTO.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
-            }, description = "El país fue habilitado exitosamente"),
+            }, description = "El Conductor fue actualizado exitosamente"),
             @ApiResponse(responseCode = "400", description = "La petición es inválida"),
             @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")})
     public ResponseEntity<StandardResponse<DriverDTO>> update(@Valid @RequestBody DriverDTO driver) {
@@ -83,7 +85,7 @@ public class DriverController {
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Permite eliminar un conductor")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "El conductor fue eliminada exitosamente"),
+            @ApiResponse(responseCode = "200", description = "El conductor fue eliminado exitosamente"),
             @ApiResponse(responseCode = "400", description = "La petición es inválida"),
             @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")})
     public ResponseEntity<StandardResponse<Void>> delete(@PathVariable Integer id) {

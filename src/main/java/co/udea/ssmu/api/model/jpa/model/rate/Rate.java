@@ -12,26 +12,23 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @ManyToOne
-    @JoinColumn (name = "serviceType")
-    private ServiceType serviceType;
     @NotNull
-    @Column(name = "distanceTraveled")
+    @Column(name = "distance_traveled")
     private Double distanceTraveled;
     @NotNull
-    @Column(name = "baseRate")
+    @Column(name = "base_rate")
     private Double baseRate;
     @NotNull
-    @Column(name = "coveredKmRate")
+    @Column(name = "covered_km_Rate")
     private Double coveredKmRate;
     @NotNull
-    @Column(name = "rateKm")
+    @Column(name = "rate_km")
     private Double rateKm;
     @NotNull
-    @Column(name = "hourlyRate")
+    @Column(name = "hourly_rate")
     private Double hourlyRate;
     @NotNull
-    @Column(name = "multiplierFactor")
+    @Column(name = "multiplier_factor")
     private Double multiplierFactor;
 
     public Integer getId() {
@@ -40,14 +37,6 @@ public class Rate {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public ServiceType getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(ServiceType serviceType) {
-        this.serviceType = serviceType;
     }
 
     public Double getDistanceTraveled() {

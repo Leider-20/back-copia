@@ -30,6 +30,8 @@ public class ServiceDTO {
     private PaymentMethodDTO paymentMethod;
     //private Tarifa tarifa;
     private Double costo;
+    private String ability;
+    private Boolean allowsPets;
 
 
     public Integer getUbicacionOrigen() {
@@ -150,5 +152,21 @@ public class ServiceDTO {
 
     public void setPaymentMethod(PaymentMethodDTO paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getAbility() {
+        return ability;
+    }
+
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+
+    public Boolean getAllowsPets() {
+        return allowsPets;
+    }
+
+    public void setAllowsPets(Boolean allowsPets) {
+        this.allowsPets = allowsPets;
     }
 }

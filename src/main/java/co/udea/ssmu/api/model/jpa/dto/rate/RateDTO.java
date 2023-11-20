@@ -1,12 +1,8 @@
 package co.udea.ssmu.api.model.jpa.dto.rate;
 
-
-import co.udea.ssmu.api.model.jpa.dto.serviceType.ServiceTypeDTO;
-
 public class RateDTO {
 
     private Integer id;
-    private ServiceTypeDTO serviceType;
     private Double distanceTraveled;
     private Double baseRate;
     private Double coveredKmRate;
@@ -20,14 +16,6 @@ public class RateDTO {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public ServiceTypeDTO getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(ServiceTypeDTO serviceType) {
-        this.serviceType = serviceType;
     }
 
     public Double getDistanceTraveled() {

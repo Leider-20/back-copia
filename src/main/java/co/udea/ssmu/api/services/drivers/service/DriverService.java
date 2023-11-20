@@ -1,5 +1,6 @@
 package co.udea.ssmu.api.services.drivers.service;
 
+import co.udea.ssmu.api.model.jpa.model.vehicles.Vehicle;
 import co.udea.ssmu.api.utils.common.Messages;
 import co.udea.ssmu.api.utils.exception.BusinessException;
 import co.udea.ssmu.api.model.jpa.model.drivers.Driver;
@@ -52,5 +53,14 @@ public class DriverService {
         driverRepository.findById(id).orElseThrow(() ->
                 new BusinessException(String.format(messages.get("driver.delete.find.error"), id)));
         this.driverRepository.deleteById(id);
+    }
+
+    public Driver findById(Integer id) {
+//        return driverRepository.findById(id);
+        Optional<Driver> driverOptional = driverRepository.findById(id);
+        if (driverOptional.isEmpty()) {
+            throw new BusinessException(String.format(messages.get("driver.get.does.not.exist")));
+        }
+        return driverOptional.get();
     }
 }
