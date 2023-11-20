@@ -6,6 +6,7 @@ import co.udea.ssmu.api.model.jpa.model.vehicles.Vehicle;
 import co.udea.ssmu.api.model.jpa.repository.rate.RateRepository;
 import co.udea.ssmu.api.utils.common.Messages;
 import co.udea.ssmu.api.utils.exception.BusinessException;
+import co.udea.ssmu.api.utils.exception.TarifaNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,24 @@ public class RateService {
 
     public Rate save(Rate rate){
         return rateRepository.save(rate);
+    }
+
+    public Double calcularTarifaTotal(Double distanciaRecorrida) {
+        // Se obtiene la tarifa actual de la base de datos
+        Rate tarifa = rateRepository.findTopByOrderByIdDesc().orElse(null);
+
+        if (tarifa == null) {
+            throw new TarifaNotFoundException("No se encontró ninguna tarifa en la base de datos.");
+        }
+
+        // Calcula la tarifa total
+        Double tarifaBase = tarifa.getBaseRate();
+        Double tarifaKm = tarifa.getRateKm();
+        Double factorMultiplicador = tarifa.getMultiplierFactor();
+
+        Double tarifaTotal = tarifaBase + (distanciaRecorrida * tarifaKm * factorMultiplicador);
+
+        return tarifaTotal;
     }
 
     public Rate update(Rate rate) {
