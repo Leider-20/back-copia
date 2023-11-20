@@ -152,5 +152,4 @@ public class Driver {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
-
 }

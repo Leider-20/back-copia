@@ -193,6 +193,14 @@ public class Service {
         this.estadoPago = estadoPago;
     }
 
+    public String getCalificacionServicio() {
+        return calificacionUsuario;
+    }
+
+    public void setCalificacionServicio(String calificacionServicio) {
+        this.calificacionServicio = calificacionServicio;
+    }
+
     public String getCalificacionConductor() {
         return calificacionConductor;
     }
