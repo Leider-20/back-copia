@@ -100,7 +100,7 @@ public class AdminController {
             @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")})
     public ResponseEntity<StandardResponse<Rate>> save(@Valid @RequestBody Rate rate) {
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
-//                rateFacade.save(rate)));
+                messages.get("rate.save.successful"),
                 rateRepository.save(rate)));
 
     }
@@ -130,7 +130,7 @@ public class AdminController {
             @ApiResponse(responseCode = "500", description = "Error interno al procesar la respuesta")})
     public ResponseEntity<StandardResponse<List<RateDTO>>> findAll() {
         return ResponseEntity.ok(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK,
-//                messages.get("vehicle.get.all.successful"),
+                messages.get("rate.get.all.successful"),
                 rateFacade.findByAll()));
     }
 
